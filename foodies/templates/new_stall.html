@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<form id="new-stall-form">
+  {% csrf_token %}
+  <p>Name</p>
+  <input type="text" name="name">
+  <p>Category</p>
+  <select name="category">
+    <option value="Japanese">Japanese</option>
+    <option value="Chinese">Chinese</option>
+    <option value="Western">Western</option>
+    <option value="Western">Arabian</option>
+    <option value="Western">Indian</option>
+  </select>
+  <p>Photo</p>
+  <input type="text" name="photo">
+  <button type="submit">Save</button>
+</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  $(document).ready(() => {
+    $('#new-stall-form').submit((e) => {
+      e.preventDefault()
+      $.ajax({
+        url: '/api/stall/',
+        type: 'POST',
+        dataType: 'json',
+        data: $('#new-stall-form').serialize(),
+        success: () => {
+          location.href = '/auth/'
+        },
+        error: () => {
+          alert('Failed to create new stall')
+        }
+      })
+    })
+  })
+</script>
+
+{% endblock content %}

@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="mt-4 px-4">
+  <h1 id="title" class="text-3xl font-bold">
+    Loading...
+  </h1>
+  <div class="mt-4 grid grid-cols-3 gap-4">
+    <div id="in-progress">
+      <h1 class="text-xl font-medium">In Progress</h1>
+    </div>
+    <div id="ready-for-pickup">
+      <h1 class="text-xl font-medium">Ready for Pickup</h1>
+    </div>
+    <div id="done">
+      <h1 class="text-xl font-medium">Done</h1>
+    </div>
+  </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  $(document).ready(() => {
+    stall_id = parseInt('{{stall_id}}')
+
+    const orderCard = (order) => `
+      <div id="order-${order.id}" class="mt-2 p-4 rounded-lg shadow-md">
+        <div class="w-full flex justify-between">
+          <h1 class="text-2xl font-medium">
+            Order #${order.id}
+          </h1>
+          ${
+            order.status != 'Done' ? `
+              <button id="move-order-${order.id}" class="px-4 bg-blue-500 rounded-lg text-white hover:bg-blue-600 duration-300">
+                Next
+              </button>
+            ` : ''
+          }
+        </div>
+        <div id="order-${order.id}-menus" class="mt-2">
+          
+        </div>
+      </div>
+    `
+
+    const appendOrder = (order) => {
+      status = order.status.toLowerCase().replaceAll(' ','-')
+      $(`#${status}`).append(orderCard(order))
+      order.menus.forEach((order_menu) => {
+        $(`#order-${order.id}-menus`).append(`<p>${order_menu.quantity} ${order_menu.menu.name}</p>`)
+      })
+      $(`#move-order-${order.id}`).click(() => {
+        $.ajax({
+          url: `/api/order-stall/${order.id}/`,
+          type: 'PUT',
+          dataType: 'json',
+          success: (order) => {
+            $(`#order-${order.id}`).remove()
+            appendOrder(order)
+          },
+          error: () => {
+            alert('Failed to update status')
+          }
+        })
+      })
+    }
+    
+    $.get(`/api/stall/${stall_id}/`, (stall) => {
+      $('#title').text(`Orders for ${stall.name}`)
+    })
+
+    $.get(`/api/order-stall/${stall_id}/`, (orders) => {
+      orders.forEach((order) => appendOrder(order))
+    })
+  })  
+</script>
+
+{% endblock content %}

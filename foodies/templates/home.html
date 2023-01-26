@@ -1,0 +1,581 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="relative h-screen w-full">
+  <div class="fixed bottom-10 right-10 flex">
+    <img id="filter-recommendation-modal-open-button" src="{% static 'chef.svg' %}" alt="recommendation" class="w-20 h-20 hover:brightness-50 duration-300">
+    <img id="cart-modal-open-button" src="{% static 'shopping-cart.png' %}" alt="cart" class="ml-8 w-20 h-20 hover:brightness-50 duration-300">
+  </div>
+  <div id="recommendation-modal" class="hidden fixed h-screen w-full left-0 top-0 z-10 bg-black bg-opacity-50 flex justify-center items-center">
+    <div class="bg-white rounded-lg p-10 pt-4">
+      <img src="{% static 'food.webp' %}" class="w-full" />
+      <div class="flex justify-center">
+        <h1 class="text-3xl font-bold">
+          Need some recommendation?
+        </h1>
+      </div>
+      <div class="mt-4 flex justify-center">
+        <div class="flex">
+          <button class="recommendation-close-button px-4 py-2 bg-red-500 rounded-lg text-2xl text-white hover:bg-red-600 duration-300">
+            No
+          </button>
+          <button id="get-recommendation-button" class="ml-4 px-4 py-2 bg-blue-500 rounded-lg text-2xl text-white hover:bg-blue-600 duration-300">
+            Yes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="filter-recommendation-modal" class="hidden fixed h-screen w-full left-0 top-0 z-10 bg-black bg-opacity-50 flex justify-center items-center">
+    <div class="w-fit bg-white rounded-lg">
+      <div class="p-4 border-b-2 border-gray-300 flex justify-between">
+        <h1 class="text-xl font-bold">
+          Filter
+        </h1>
+        <button type="button" class="filter-recommendation-modal-close-button bg-white rounded-md inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-inset focus:ring-indigo-500">
+          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="p-4">
+        <p>Price</p>
+        <div class="flex items-center">
+          <input type="number" id="recommendation-min-price" placeholder="MIN" class="w-40 rounded-lg">
+          <p class="ml-2">-</p>
+          <input type="number" id="recommendation-max-price" placeholder="MAX" class="w-40 ml-2 rounded-lg">
+        </div>
+        <p class="mt-4">Category</p>
+        <select id="recommendation-category" class="w-40 rounded-lg">
+          <option value="All">All</option>
+          <option value="Japanese">Japanese</option>
+          <option value="Chinese">Chinese</option>
+          <option value="Western">Western</option>
+          <option value="Western">Arabian</option>
+          <option value="Western">Indian</option>
+        </select>
+        <p class="mt-4">Hot/Cold</p>
+        <select id="recommendation-hot" class="w-40 rounded-lg">
+          <option value="All">All</option>
+          <option value="Hot">Hot</option>
+          <option value="Cold">Cold</option>
+        </select>
+        <p class="mt-4">Vegetarian</p>
+        <select id="recommendation-vegetarian" class="w-40 rounded-lg">
+          <option value="All">All</option>
+          <option value="Vegetarian">Vegetarian</option>
+          <option value="Non-Vegetarian">Non-Vegetarian</option>
+        </select>
+        <p class="mt-4">Halal</p>
+        <select id="recommendation-halal" class="w-40 rounded-lg">
+          <option value="All">All</option>
+          <option value="Halal">Halal</option>
+          <option value="Non-Halal">Non-Halal</option>
+        </select>
+        <div class="flex mt-4">
+          <div class="flex items-center">
+            <input type="checkbox" id="recommendation-peanut" class="rounded-md">
+            <p class="ml-1">Peanut</p>
+          </div>
+          <div class="ml-6 flex items-center">
+            <input type="checkbox" id="recommendation-shrimp" class="rounded-md">
+            <p class="ml-1">Shrimp</p>
+          </div>
+          <div class="ml-6 flex items-center">
+            <input type="checkbox" id="recommendation-lactose" class="rounded-md">
+            <p class="ml-1">Lactose</p>
+          </div>
+        </div>
+      </div>
+      <div class="p-4">
+        <div class="flex justify-between">
+          <div></div>
+          <div>
+            <button class="filter-recommendation-modal-close-button bg-gray-200 py-2 px-4 rounded-lg text-lg hover:bg-gray-300">
+              Cancel
+            </button>
+            <button id="filter-recommendation" class="ml-2 bg-blue-500 py-2 px-4 rounded-lg text-lg text-white hover:bg-blue-600">
+              Filter
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="menu-recommendation-modal" class="hidden fixed h-screen w-full left-0 top-0 z-10 bg-black bg-opacity-50 flex justify-center items-center">
+    <div class="w-1/5 bg-white rounded-lg">
+      <div class="p-4 border-b-2 border-gray-300 flex justify-between">
+        <h1 id="menu-recommendation-title" class="text-xl font-bold">
+
+        </h1>
+        <button type="button" class="menu-recommendation-modal-close-button bg-white rounded-md inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-inset focus:ring-indigo-500">
+          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <form id="new-menu-recommendation-form">
+        {% csrf_token %}
+        <div class="p-4 flex justify-center items-center">
+          <button type="button" class="decrement-portion h-8 w-8 rounded-lg bg-blue-500 hover:bg-blue-600 duration-300 text-white">
+            -
+          </button>
+          <input type="number" name="quantity" value="1" class="portion-input rounded-lg w-20 ml-4">
+          <button type="button" class="increment-portion ml-4 h-8 w-8 rounded-lg bg-blue-500 hover:bg-blue-600 duration-300 text-white">
+            +
+          </button>
+        </div>
+        <div class="p-4">
+          <div class="flex justify-between">
+            <div></div>
+            <div>
+              <button class="menu-recommendation-modal-close-button bg-gray-200 py-2 px-4 rounded-lg text-lg hover:bg-gray-300">
+                Cancel
+              </button>
+              <button type="submit" class="clear-timeout ml-2 bg-blue-500 py-2 px-4 rounded-lg text-lg text-white hover:bg-blue-600">
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div id="cart-modal" class="hidden fixed h-screen w-full left-0 top-0 z-10 bg-black bg-opacity-50 flex justify-center items-center">
+    <div class="w-1/3 bg-white rounded-lg">
+      <div class="p-4 border-b-2 border-gray-300 flex justify-between">
+        <h1 class="text-xl font-bold">
+          My Cart
+        </h1>
+        <button type="button" class="cart-modal-close-button bg-white rounded-md inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-inset focus:ring-indigo-500">
+          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div id="cart-stall-section" class="p-4">
+        Loading...
+      </div>
+      <div class="p-4">
+        <div class="flex justify-between">
+          <div></div>
+          <div>
+            <button class="cart-modal-close-button bg-gray-200 py-2 px-4 rounded-lg text-lg hover:bg-gray-300">
+              Cancel
+            </button>
+            <button id="checkout-button" class="ml-2 bg-blue-500 py-2 px-4 rounded-lg text-lg text-white hover:bg-blue-600">
+              Checkout
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="filter-modal" class="hidden fixed h-screen w-full left-0 top-0 z-10 bg-black bg-opacity-50 flex justify-center items-center">
+    <div class="w-1/5 bg-white rounded-lg">
+      <div class="p-4 border-b-2 border-gray-300 flex justify-between">
+        <h1 class="text-xl font-bold">
+          Filter
+        </h1>
+        <button type="button" class="filter-modal-close-button bg-white rounded-md inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-inset focus:ring-indigo-500">
+          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="p-4">
+        <p class="mt-4">Category</p>
+        <select id="category" class="w-40 rounded-lg">
+          <option value="Japanese">Japanese</option>
+          <option value="Chinese">Chinese</option>
+          <option value="Western">Western</option>
+          <option value="Western">Arabian</option>
+          <option value="Western">Indian</option>
+        </select>
+      </div>
+      <div class="p-4">
+        <div class="flex justify-between">
+          <div></div>
+          <div>
+            <button class="filter-modal-close-button bg-gray-200 py-2 px-4 rounded-lg text-lg hover:bg-gray-300">
+              Cancel
+            </button>
+            <button id="filter" class="ml-2 bg-blue-500 py-2 px-4 rounded-lg text-lg text-white hover:bg-blue-600">
+              Filter
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="mt-4 px-4">
+      <div class="flex items-center mt-4">
+        <input type="text" id="search" class="w-full rounded-lg" placeholder="Search">
+        <button id="filter-modal-open-button" class="ml-4 py-2 px-4 bg-blue-500 text-white text-xl rounded-lg hover:bg-blue-600">
+          Filter
+        </button>
+      </div>
+      <div id="active-filters" class="mt-4">
+
+      </div>
+      <div id="stalls-section" class="mt-4 grid grid-cols-4 gap-4 w-full">
+        
+      </div>
+    </div>
+    <div class="text-2xl"></div>
+  </div>
+  <div id="order-menu-modal" class="hidden fixed h-screen w-full left-0 top-0 z-10 bg-black bg-opacity-50 flex justify-center items-center">
+    <div class="w-1/5 bg-white rounded-lg">
+      <div class="p-4 border-b-2 border-gray-300 flex justify-between">
+        <h1 id="order-menu-title" class="text-xl font-bold">
+
+        </h1>
+        <button type="button" class="order-menu-modal-close-button bg-white rounded-md inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-inset focus:ring-indigo-500">
+          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <form id="new-order-menu-form">
+        {% csrf_token %}
+        <div class="p-4 flex justify-center items-center">
+          <button type="button" class="decrement-portion h-8 w-8 rounded-lg bg-blue-500 hover:bg-blue-600 duration-300 text-white">
+            -
+          </button>
+          <input type="number" name="quantity" value="1" class="portion-input rounded-lg w-20 ml-4">
+          <button type="button" class="increment-portion ml-4 h-8 w-8 rounded-lg bg-blue-500 hover:bg-blue-600 duration-300 text-white">
+            +
+          </button>
+        </div>
+        <div class="p-4">
+          <div class="flex justify-between">
+            <div></div>
+            <div>
+              <button class="order-menu-modal-close-button bg-gray-200 py-2 px-4 rounded-lg text-lg hover:bg-gray-300">
+                Cancel
+              </button>
+              <button type="submit" class="clear-timeout ml-2 bg-blue-500 py-2 px-4 rounded-lg text-lg text-white hover:bg-blue-600">
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="mt-1 pr-2 py-1 shadow-md rounded-md"></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  $(document).ready(() => {
+    order_id = localStorage.getItem('order')
+
+    $.get(`/api/order/${order_id}`, (order) => {
+      let needRecommendation = true
+      order.stalls.forEach((order_stall) => {
+        if (order_stall.menus.length > 0) {
+          needRecommendation = false
+        }
+      })
+
+      const orderCreatedAt = new Date(order.created_at)
+      const now = new Date()
+      
+      if (needRecommendation && now-orderCreatedAt < 3*60*1000) {
+        const timeout = setTimeout(() => {
+          $('#recommendation-modal').removeClass('hidden')
+          clearTimeout(timeout)
+        }, 3*60*1000-(now-orderCreatedAt))
+      }
+    })
+
+    let recommendationMenu = null
+
+    $('#filter-recommendation-modal-open-button').click(() => {
+      $('#filter-recommendation-modal').removeClass('hidden')
+    })
+    
+    $('.filter-recommendation-modal-close-button').click(() => {
+      $('#filter-recommendation-modal').addClass('hidden')
+    })
+
+    $('.recommendation-close-button').click(() => {
+      $('#recommendation-modal').addClass('hidden')
+    })
+
+    $('#get-recommendation-button').click(() => {
+      $('#recommendation-modal').addClass('hidden')
+      $('#filter-recommendation-modal').removeClass('hidden')
+    })
+
+    $('#filter-recommendation').click(() => {
+      const minPrice = parseInt($('#recommendation-min-price').val()) || 0
+      const maxPrice = parseInt($('#recommendation-max-price').val()) || 10000000
+      const hot = $('#recommendation-hot').val() // 'Hot' or 'Cold'
+      const halal = $('#recommendation-halal').val()
+      const vegetarian = $('#recommendation-vegetarian').val()
+      const peanut = $('#recommendation-peanut').is(':checked')
+      const shrimp = $('#recommendation-shrimp').is(':checked')
+      const lactose = $('#recommendation-lactose').is(':checked')
+      const category = $('#recommendation-category').val()
+
+      const url = new URL(`${window.location.origin}/api/random/`)
+      url.searchParams.append('minPrice', minPrice)
+      url.searchParams.append('maxPrice', maxPrice)
+      if (category != 'All') url.searchParams.append('category', category)
+      if (hot != 'All') url.searchParams.append('hot', hot == 'Hot')
+      if (halal != 'All') url.searchParams.append('halal', halal == 'Halal')
+      if (vegetarian != 'All') url.searchParams.append('vegetarian', vegetarian == 'Vegetarian')
+      url.searchParams.append('peanut', peanut)
+      url.searchParams.append('shrimp', shrimp)
+      url.searchParams.append('lactose', lactose)
+      
+      $.get(url.href, (menu) => {
+        recommendationMenu = menu
+        $('#filter-recommendation-modal').addClass('hidden')
+        $('#menu-recommendation-modal').removeClass('hidden')
+        $('#menu-recommendation-title').text(menu.name)
+        $('.portion-input').val(1)
+      })
+    })
+
+    $('#new-menu-recommendation-form').submit((e) => {
+      e.preventDefault()
+      order_id = localStorage.getItem('order')
+      $.ajax({
+        url: `/api/order-menu/v2/${order_id}/${recommendationMenu.id}/`,
+        type: 'POST',
+        data: $('#new-menu-recommendation-form').serialize(),
+        dataType: 'json',
+        success: (order_menu) => {
+          localStorage.setItem(`order-menu-${recommendationMenu.id}`, order_menu.id)
+          $('#menu-recommendation-modal').addClass('hidden')
+        },
+        error: () => {
+          alert('Failed to add menu')
+        }
+      })
+      $('#order-menu-modal').addClass('hidden')
+    })
+
+    let all_stalls = null
+    let selected_category = null
+    let keyword = ''
+    let activeMenu = null
+    let activeStall = null
+    let total = 0
+
+    const stallCard = (stall) => `
+      <div id="stall-${stall.id}" class="flex items-end h-60 rounded-lg bg-contain bg-no-repeat bg-center shadow-xl" style="background-image: url('${stall.photo || 'https://cdn.vox-cdn.com/thumbor/5d_RtADj8ncnVqh-afV3mU-XQv0=/0x0:1600x1067/1200x900/filters:focal(672x406:928x662)/cdn.vox-cdn.com/uploads/chorus_image/image/57698831/51951042270_78ea1e8590_h.7.jpg'}')">
+        <div class="bg-black py-4 px-6 text-white text-xl rounded-bl-lg">
+          ${stall.id}
+        </div>
+        <div class="backdrop-blur-md bg-white/40 w-full p-4 rounded-br-lg">
+          <p class="text-xl font-bold">
+            ${stall.name}
+          </p>
+        </div>
+      </div>
+    `
+
+    const appendStallCards = () => {
+      $('#stalls-section').html('')
+      const filtered_stalls = all_stalls.filter((stall) => (
+        stall.name.toLowerCase().includes(keyword) && 
+        (!selected_category || stall.category == selected_category)
+      ))
+      filtered_stalls.forEach((stall) => {
+        $('#stalls-section').append(stallCard(stall))
+        $(`#stall-${stall.id}`).click(() => {
+          const order_id = localStorage.getItem('order')
+          $.ajax({
+            url: `/api/order-stall/${order_id}/${stall.id}/`,
+            type: 'GET',
+            dataType: 'json',
+            success: (order_stall) => {
+              console.log(order_stall)
+              localStorage.setItem(`order-stall-${stall.id}`, order_stall.id)
+              location.href=`/stall/${stall.id}`
+            },
+            error: () => {
+              location.href=`/stall/${stall.id}`
+            }
+          })
+        })
+      })
+    }
+
+    $.get('/api/stall/', (stalls) => {
+      all_stalls = stalls 
+      appendStallCards()
+    })
+
+    $('#search').change(() => {
+      keyword = $('#search').val().toLowerCase()
+      appendStallCards()
+    })
+
+    $('#filter-modal-open-button').click(() => {
+      $('#filter-modal').removeClass('hidden')
+    })
+
+    $('.filter-modal-close-button').click(() => {
+      $('#filter-modal').addClass('hidden')
+    })
+
+    $('#filter').click(() => {
+      selected_category = $('#category').val()
+      $('#active-filters').html(`
+        <button id="active-category" class="bg-blue-400 py-2 px-4 rounded-full">
+          ${selected_category}
+        </button>
+      `)
+      $('#active-category').click(() => {
+        selected_category = null
+        appendStallCards()
+        $('#active-category').remove()
+      })
+      appendStallCards()
+      $('#filter-modal').addClass('hidden')
+    })
+
+    $('#cart-modal-open-button').click(() => {
+      $('#cart-modal').removeClass('hidden')
+      const order_id = localStorage.getItem('order')
+      $.ajax({
+        url: `/api/order/${order_id}/`,
+        type: 'GET',
+        dataType: 'json',
+        success: (order) => {
+          $('#cart-stall-section').html('')
+          total = 0
+          order.stalls.forEach((order_stall) => {
+            if (order_stall.menus.length == 0) return
+            $('#cart-stall-section').append(`
+              <div id="cart-stall-${order_stall.id}" class="mb-4">
+                <h1 class="font-bold text-lg">
+                  ${order_stall.stall.name}
+                </h1>
+                <div id="cart-menu-section-${order_stall.id}" class="ml-4">
+                </div>
+              </div>
+            `)
+            order_stall.menus.forEach((order_menu, idx) => {
+              $(`#cart-menu-section-${order_stall.id}`).append(`
+                <div id="cart-menu-${order_menu.id}" class="mt-1 px-2 py-1 shadow-md rounded-md hover:bg-gray-100 flex justify-between">
+                  <p>
+                    ${order_menu.quantity} ${order_menu.menu.name}
+                  </p>
+                  <p id="cart-menu-price-${order_menu.id}">
+                    $${order_menu.quantity * order_menu.menu.price}
+                  </p>
+                </div>
+              `)
+              total += order_menu.quantity * order_menu.menu.price
+              $(`#cart-menu-${order_menu.id}`).click(() => {
+                activeMenu = order_menu.menu
+                activeStall = order_stall.stall
+                $('#order-menu-modal').removeClass('hidden')
+                $('#order-menu-title').text(order_menu.menu.name)
+                order_menu_id = localStorage.getItem(`order-menu-${order_menu.menu.id}`)
+                if (order_menu_id != null) {
+                  $.get(`/api/order-menu/${order_menu_id}`, (order_menu) => {
+                    $('.portion-input').val(order_menu.quantity)
+                  })
+                }
+                else $('.portion-input').val(1)
+              })
+            })
+          })
+          $('#cart-stall-section').append(`
+            <div class="pr-2 flex justify-between">
+              <h1 class="font-bold text-lg">Total</h1>
+              <h1 id="total-price" class="font-bold text-lg">
+                $${total}
+              </h1>
+            </div>
+          `)
+        },
+        error: () => {
+          alert('Failed to get order data')
+        }
+      })
+    })
+    
+    $('.cart-modal-close-button').click(() => {
+      $('#cart-modal').addClass('hidden')
+    })
+
+    $('.order-menu-modal-close-button').click(() => {
+      $('#order-menu-modal').addClass('hidden')
+    })
+    
+    $('.menu-recommendation-modal-close-button').click(() => {
+      $('#menu-recommendation-modal').addClass('hidden')
+    })
+
+    $('.decrement-portion').click(() => {
+      const curPortion = parseInt($('.portion-input').val())
+      $('.portion-input').val(Math.max(0,curPortion-1))
+    })
+
+    $('.increment-portion').click(() => {
+      const curPortion = parseInt($('.portion-input').val())
+      $('.portion-input').val(curPortion+1)
+    })
+
+    $('#new-order-menu-form').submit((e) => {
+      e.preventDefault()
+      order_stall_id = localStorage.getItem(`order-stall-${activeStall.id}`)
+      order_menu_id = localStorage.getItem(`order-menu-${activeMenu.id}`)
+      $.ajax({
+        url: `/api/order-menu/${order_menu_id}/`,
+        type: 'PUT',
+        data: $('#new-order-menu-form').serialize(),
+        dataType: 'json',
+        success: (order_menu) => {
+          const old_price = parseInt($(`#cart-menu-price-${order_menu.id}`).text().trim().substring(1))
+          $(`#cart-menu-${order_menu.id}`).html(`
+            <p>
+              ${order_menu.quantity} ${order_menu.menu.name}
+            </p>
+            <p id="cart-menu-price-${order_menu.id}">
+              $${order_menu.quantity * order_menu.menu.price}
+            </p>
+          `)
+          total -= old_price
+          total += order_menu.quantity * order_menu.menu.price
+          $('#total-price').text(`$${total}`)
+          if (order_menu.quantity == 0) {
+            localStorage.removeItem(`order-menu-${activeMenu.id}`)
+          }
+        },
+        error: () => {
+          alert('Failed to update menu')
+        }
+      })
+      $('#order-menu-modal').addClass('hidden')
+    })
+
+    $('#checkout-button').click(() => {
+      const order_id = localStorage.getItem('order')
+      $.ajax({
+        url: `/api/checkout/${order_id}/`,
+        type: 'GET',
+        dataType: 'json',
+        success: (order_menu) => {
+          alert('Berhasil')
+        },
+        error: () => {
+          alert('Failed to checkout order')
+        }
+      })
+    })
+  }) 
+</script>
+  
+{% endblock content %}

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<form id="new-menu-form">
+  {% csrf_token %}
+  <p>Name</p>
+  <input type="text" name="name">
+  <p>Price</p>
+  <input type="number" name="price">
+  <p>Category</p>
+  <select name="category">
+    <option value="Japanese">Japanese</option>
+    <option value="Chinese">Chinese</option>
+    <option value="Western">Western</option>
+    <option value="Western">Arabian</option>
+    <option value="Western">Indian</option>
+  </select>
+  <p>Photo</p>
+  <input type="text" name="photo">
+  <div class="flex items-center">
+    <p>Hot?</p>
+    <input type="checkbox" name="hot" class="ml-2">
+  </div>
+  <div class="flex items-center">
+    <p>Peanut?</p>
+    <input type="checkbox" name="peanut" class="ml-2">
+  </div>
+  <div class="flex items-center">
+    <p>Shrimp?</p>
+    <input type="checkbox" name="shrimp" class="ml-2">
+  </div>
+  <div class="flex items-center">
+    <p>Lactose?</p>
+    <input type="checkbox" name="lactose" class="ml-2">
+  </div>
+  <div class="flex items-center">
+    <p>Halal?</p>
+    <input type="checkbox" name="halal" class="ml-2">
+  </div>
+  <div class="flex items-center">
+    <p>Vegetarian?</p>
+    <input type="checkbox" name="vegetarian" class="ml-2">
+  </div>
+  <button type="submit">Save</button>
+</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  stall_id = parseInt('{{ stall_id }}')
+  $(document).ready(() => {
+    $('#new-menu-form').submit((e) => {
+      e.preventDefault()
+      $.ajax({
+        url: `/api/menu/${stall_id}/`,
+        type: 'POST',
+        dataType: 'json',
+        data: $('#new-menu-form').serialize(),
+        success: () => {
+          location.href = `/auth/stall/${stall_id}`
+        },
+        error: () => {
+          alert('Failed to create new menu')
+        }
+      })
+    })
+  })
+</script>
+
+{% endblock content %}

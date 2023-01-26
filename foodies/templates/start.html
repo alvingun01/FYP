@@ -1,0 +1,45 @@
+
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="flex w-full h-screen justify-center items-center">
+  <form id="new-order-form">
+    {% csrf_token %}<!-- diurus sm django untuk buat table number-->
+    <div class="flex-col items-center justify-center">
+      <h1 class="text-xl text-center">Table Number</h1>
+      <input type="number" name="table_no" class="form-control w-full mt-4 h-20 rounded-xl text-2xl text-center">
+      <button id="start-order" class="start-timeout w-full mt-6 bg-blue-500 py-4 text-white text-2xl rounded-xl hover:bg-blue-600">
+        START
+      </button>
+    </div>
+  </form>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  $(document).ready(() => {
+    $('#new-order-form').submit((e) => {
+      e.preventDefault();
+      localStorage.clear();
+      $.ajax({
+        url: '/api/order/',
+        type: 'POST',
+        dataType: 'json',
+        data: $('#new-order-form').serialize(),
+        success: (order) => {
+          localStorage.setItem('order', order.id)
+          // localStorage.setItem('order-created-at', order.created_at)
+          location.href = '/'
+        },
+        error: () => {
+          alert('Failed to create new order')
+        }
+      })
+    })
+  })
+</script>
+
+{% endblock content %}
