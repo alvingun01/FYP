@@ -6,6 +6,8 @@ from rest_framework.response import Response
 from foodies.models import *
 from foodies.forms import *
 from foodies.serializers import *
+from win32 import win32print
+
 
 def start(request): #render page
     return render(request, 'start.html')
@@ -284,6 +286,30 @@ def checkout_api(request, id):
         order.save()
         OrderStall.objects.filter(order_id=id, menus__isnull=True).delete()
         order_serialized = OrderSerializer(instance=order)
+        print(order_serialized.data)
+        # Print receipt
+        def truncate(str, max_length):
+            if (len(str) <= max_length): return str
+            return f"{str[:max_length-3]}..."
+        
+        receipt = '\n\n\n\n'
+        total = 0
+        for order_stall in order_serialized.data['stalls']:
+            receipt += f"{order_stall['stall']['name']}\n"
+            for order_menu in order_stall['menus']:
+                total += order_menu['quantity']*order_menu['menu']['price']
+                receipt += f"  {order_menu['quantity']:>2}x {truncate(order_menu['menu']['name'],20):20} ${order_menu['quantity']*order_menu['menu']['price']:>6.2f}\n"
+        receipt += f"\n\n{'Total':26} ${total:>6.2f}\n"
+        receipt = bytes(receipt, 'utf-8')
+
+        p = win32print.OpenPrinter("EPSON L3110 Series") # TODO: Insert printer's name
+
+        job = win32print.StartDocPrinter(p, 1, ("test of raw data", None, "RAW")) 
+        for order_stall in order_serialized.data["stalls"]:
+            win32print.StartPagePrinter(p) 
+            win32print.WritePrinter(p, receipt) 
+            win32print.EndPagePrinter(p)
+
         return Response(order_serialized.data, status=status.HTTP_200_OK)
 
     if (request.method == 'GET'): return get()
