@@ -6,10 +6,11 @@ from rest_framework.response import Response
 from foodies.models import *
 from foodies.forms import *
 from foodies.serializers import *
-from win32 import win32print
+import time
+import os, sys 
+import win32print
 
-
-def start(request): #render page
+def start(request):
     return render(request, 'start.html')
 
 def home(request):
@@ -37,7 +38,7 @@ def order_stall(request, id):
     context = { 'stall_id': id }
     return render(request, 'order_stall.html', context)
 
-@api_view(['GET','POST']) 
+@api_view(['GET','POST'])
 def stall_api(request):
     def get():
         # Get all stalls
@@ -286,29 +287,31 @@ def checkout_api(request, id):
         order.save()
         OrderStall.objects.filter(order_id=id, menus__isnull=True).delete()
         order_serialized = OrderSerializer(instance=order)
-        print(order_serialized.data)
+
         # Print receipt
         def truncate(str, max_length):
             if (len(str) <= max_length): return str
             return f"{str[:max_length-3]}..."
         
-        receipt = '\n\n\n\n'
+        receipt = f"\n\n\n\n{'='*33}\n\n{'RECEIPT':^33}\n\n"
         total = 0
         for order_stall in order_serialized.data['stalls']:
             receipt += f"{order_stall['stall']['name']}\n"
             for order_menu in order_stall['menus']:
                 total += order_menu['quantity']*order_menu['menu']['price']
                 receipt += f"  {order_menu['quantity']:>2}x {truncate(order_menu['menu']['name'],20):20} ${order_menu['quantity']*order_menu['menu']['price']:>6.2f}\n"
-        receipt += f"\n\n{'Total':26} ${total:>6.2f}\n"
+        receipt += f"\n\n{'Total':26} ${total:>6.2f}\n\n{'='*33}\n"
         receipt = bytes(receipt, 'utf-8')
 
-        p = win32print.OpenPrinter("EPSON L3110 Series") # TODO: Insert printer's name
-
+        p = win32print.OpenPrinter("___") # TODO: Insert printer's name
         job = win32print.StartDocPrinter(p, 1, ("test of raw data", None, "RAW")) 
-        for order_stall in order_serialized.data["stalls"]:
-            win32print.StartPagePrinter(p) 
-            win32print.WritePrinter(p, receipt) 
+
+        for order_stall in order_serialized.data['stalls']:
+            win32print.StartPagePrinter(p)
+            win32print.WritePrinter(p, receipt)
             win32print.EndPagePrinter(p)
+            time.sleep(4)
+            # TODO: Stall some time to take the copy
 
         return Response(order_serialized.data, status=status.HTTP_200_OK)
 
