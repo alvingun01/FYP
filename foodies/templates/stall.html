@@ -5,8 +5,8 @@
 
 <div class="relative">
   <div class="fixed bottom-10 right-10 flex">
-    <img id="filter-recommendation-modal-open-button" src="{% static 'chef.svg' %}" alt="recommendation" class="w-20 h-20 hover:brightness-50 duration-300">
-    <img id="cart-modal-open-button" src="{% static 'shopping-cart.png' %}" alt="cart" class="ml-8 w-20 h-20 hover:brightness-50 duration-300">
+    <img id="filter-recommendation-modal-open-button" src="{% static 'chef.svg' %}" alt="recommendation" class="z-1000 w-20 h-20 hover:brightness-50 duration-300">
+    <img id="cart-modal-open-button" src="{% static 'shopping-cart.png' %}" alt="cart" class="z-1000 ml-8 w-20 h-20 hover:brightness-50 duration-300">
   </div>  
   <div id="recommendation-modal" class="hidden fixed h-screen w-full left-0 top-0 z-10 bg-black bg-opacity-50 flex justify-center items-center">
     <div class="bg-white rounded-lg p-10 pt-4">
@@ -56,11 +56,11 @@
           <option value="Western">Arabian</option>
           <option value="Western">Indian</option>
         </select>
-        <p class="mt-4">Hot/Cold</p>
+        <p class="mt-4">Spicy</p>
         <select id="recommendation-hot" class="w-40 rounded-lg">
           <option value="All">All</option>
-          <option value="Hot">Hot</option>
-          <option value="Cold">Cold</option>
+          <option value="Spicy">Spicy</option>
+          <option value="Non-Spicy">Non-Spicy</option>
         </select>
         <p class="mt-4">Vegetarian</p>
         <select id="recommendation-vegetarian" class="w-40 rounded-lg">
@@ -74,20 +74,24 @@
           <option value="Halal">Halal</option>
           <option value="Non-Halal">Non-Halal</option>
         </select>
-        <div class="flex mt-4">
-          <div class="flex items-center">
-            <input type="checkbox" id="recommendation-peanut" class="rounded-md">
-            <p class="ml-1">Peanut</p>
-          </div>
-          <div class="ml-6 flex items-center">
-            <input type="checkbox" id="recommendation-shrimp" class="rounded-md">
-            <p class="ml-1">Shrimp</p>
-          </div>
-          <div class="ml-6 flex items-center">
-            <input type="checkbox" id="recommendation-lactose" class="rounded-md">
-            <p class="ml-1">Lactose</p>
-          </div>
-        </div>
+        <p class="mt-4">Peanut</p>
+        <select id="recommendation-peanut" class="w-40 rounded-lg">
+          <option value="All">All</option>
+          <option value="Contains Peanut">Contains Peanut</option>
+          <option value="No Peanut">No Peanut</option>
+        </select>
+        <p class="mt-4">Shrimp</p>
+        <select id="recommendation-shrimp" class="w-40 rounded-lg">
+          <option value="All">All</option>
+          <option value="Contains Shrimp">Contains Shrimp</option>
+          <option value="No Shrimp">No Shrimp</option>
+        </select>
+        <p class="mt-4">Lactose</p>
+        <select id="recommendation-lactose" class="w-40 rounded-lg">
+          <option value="All">All</option>
+          <option value="Contains Lactose">Contains Lactose</option>
+          <option value="No Lactose">No Lactose</option>
+        </select>
       </div>
       <div class="p-4">
         <div class="flex justify-between">
@@ -131,7 +135,7 @@
           <div class="flex justify-between">
             <div></div>
             <div>
-              <button class="menu-recommendation-modal-close-button bg-gray-200 py-2 px-4 rounded-lg text-lg hover:bg-gray-300">
+              <button type="button" class="menu-recommendation-modal-close-button bg-gray-200 py-2 px-4 rounded-lg text-lg hover:bg-gray-300">
                 Cancel
               </button>
               <button type="submit" class="clear-timeout ml-2 bg-blue-500 py-2 px-4 rounded-lg text-lg text-white hover:bg-blue-600">
@@ -188,11 +192,11 @@
       <form id="new-order-menu-form">
         {% csrf_token %}
         <div class="p-4 flex justify-center items-center">
-          <button type="button" id="decrement-portion" class="h-8 w-8 rounded-lg bg-blue-500 hover:bg-blue-600 duration-300 text-white">
+          <button type="button" class="decrement-portion h-8 w-8 rounded-lg bg-blue-500 hover:bg-blue-600 duration-300 text-white">
             -
           </button>
-          <input id="portion-input" type="number" name="quantity" value="1" class="rounded-lg w-20 ml-4">
-          <button type="button" id="increment-portion" class="ml-4 h-8 w-8 rounded-lg bg-blue-500 hover:bg-blue-600 duration-300 text-white">
+          <input id="portion-input-non-recommendation" type="number" name="quantity" value="1" class="portion-input rounded-lg w-20 ml-4">
+          <button type="button" class="increment-portion ml-4 h-8 w-8 rounded-lg bg-blue-500 hover:bg-blue-600 duration-300 text-white">
             +
           </button>
         </div>
@@ -240,11 +244,11 @@
           <option value="Western">Arabian</option>
           <option value="Western">Indian</option>
         </select>
-        <p class="mt-4">Hot/Cold</p>
+        <p class="mt-4">Spicy</p>
         <select id="hot" class="w-40 rounded-lg">
           <option value="All">All</option>
-          <option value="Hot">Hot</option>
-          <option value="Cold">Cold</option>
+          <option value="Spicy">Spicy</option>
+          <option value="Non-Spicy">Non-Spicy</option>
         </select>
         <p class="mt-4">Vegetarian</p>
         <select id="vegetarian" class="w-40 rounded-lg">
@@ -258,20 +262,24 @@
           <option value="Halal">Halal</option>
           <option value="Non-Halal">Non-Halal</option>
         </select>
-        <div class="flex mt-4">
-          <div class="flex items-center">
-            <input type="checkbox" id="peanut" class="rounded-md">
-            <p class="ml-1">Peanut</p>
-          </div>
-          <div class="ml-6 flex items-center">
-            <input type="checkbox" id="shrimp" class="rounded-md">
-            <p class="ml-1">Shrimp</p>
-          </div>
-          <div class="ml-6 flex items-center">
-            <input type="checkbox" id="lactose" class="rounded-md">
-            <p class="ml-1">Lactose</p>
-          </div>
-        </div>
+        <p class="mt-4">Peanut</p>
+        <select id="peanut" class="w-40 rounded-lg">
+          <option value="All">All</option>
+          <option value="Contains Peanut">Contains Peanut</option>
+          <option value="No Peanut">No Peanut</option>
+        </select>
+        <p class="mt-4">Shrimp</p>
+        <select id="shrimp" class="w-40 rounded-lg">
+          <option value="All">All</option>
+          <option value="Contains Shrimp">Contains Shrimp</option>
+          <option value="No Shrimp">No Shrimp</option>
+        </select>
+        <p class="mt-4">Lactose</p>
+        <select id="lactose" class="w-40 rounded-lg">
+          <option value="All">All</option>
+          <option value="Contains Lactose">Contains Lactose</option>
+          <option value="No Lactose">No Lactose</option>
+        </select>
       </div>
       <div class="p-4">
         <div class="flex justify-between">
@@ -381,24 +389,24 @@
     $('#filter-recommendation').click(() => {
       const minPrice = parseInt($('#recommendation-min-price').val()) || 0
       const maxPrice = parseInt($('#recommendation-max-price').val()) || 10000000
-      const hot = $('#recommendation-hot').val() // 'Hot' or 'Cold'
+      const hot = $('#recommendation-hot').val() // 'Hot' or 'Non-Spicy'
       const halal = $('#recommendation-halal').val()
       const vegetarian = $('#recommendation-vegetarian').val()
-      const peanut = $('#recommendation-peanut').is(':checked')
-      const shrimp = $('#recommendation-shrimp').is(':checked')
-      const lactose = $('#recommendation-lactose').is(':checked')
+      const peanut = $('#recommendation-peanut').val()
+      const shrimp = $('#recommendation-shrimp').val()
+      const lactose = $('#recommendation-lactose').val()
       const category = $('#recommendation-category').val()
 
       const url = new URL(`${window.location.origin}/api/random/`)
       url.searchParams.append('minPrice', minPrice)
       url.searchParams.append('maxPrice', maxPrice)
       if (category != 'All') url.searchParams.append('category', category)
-      if (hot != 'All') url.searchParams.append('hot', hot == 'Hot')
+      if (hot != 'All') url.searchParams.append('hot', hot == 'Spicy')
       if (halal != 'All') url.searchParams.append('halal', halal == 'Halal')
       if (vegetarian != 'All') url.searchParams.append('vegetarian', vegetarian == 'Vegetarian')
-      url.searchParams.append('peanut', peanut)
-      url.searchParams.append('shrimp', shrimp)
-      url.searchParams.append('lactose', lactose)
+      if (peanut != 'All') url.searchParams.append('peanut', peanut == 'Contains Peanut')
+      if (shrimp != 'All') url.searchParams.append('shrimp', shrimp == 'Contains Shrimp')
+      if (lactose != 'All') url.searchParams.append('lactose', lactose == 'Contains Lactose')
       
       $.get(url.href, (menu) => {
         recommendationMenu = menu
@@ -409,8 +417,13 @@
       })
     })
 
+    $('.menu-recommendation-modal-close-button').click(() => {
+      $('#menu-recommendation-modal').addClass('hidden')
+    })
+
     $('#new-menu-recommendation-form').submit((e) => {
       e.preventDefault()
+      console.log('HALO')
       order_id = localStorage.getItem('order')
       $.ajax({
         url: `/api/order-menu/v2/${order_id}/${recommendationMenu.id}/`,
@@ -438,17 +451,17 @@
     let hot = 'All'
     let vegetarian = 'All'
     let halal = 'All'
-    let peanut = null
-    let shrimp = null
-    let lactose = null
+    let peanut = 'All'
+    let shrimp = 'All'
+    let lactose = 'All'
     
     const menuCard = (menu) => `
       <div id="menu-${menu.id}" class="flex items-end h-60 rounded-lg bg-contain bg-no-repeat bg-center shadow-xl" style="background-image: url('${menu.photo || 'https://cdn.vox-cdn.com/thumbor/5d_RtADj8ncnVqh-afV3mU-XQv0=/0x0:1600x1067/1200x900/filters:focal(672x406:928x662)/cdn.vox-cdn.com/uploads/chorus_image/image/57698831/51951042270_78ea1e8590_h.7.jpg'}')">
         <div class="bg-black py-4 px-6 text-white text-xl rounded-bl-lg">
           ${menu.id}
         </div>
-        <div class="flex justify-between items-center backdrop-blur-md bg-white/40 w-full p-4 rounded-br-lg">
-          <a class="text-l font-bold">
+        <div class="flex justify-between items-center bg-white/75 w-full p-4 rounded-br-lg">
+          <a class="text-xl font-bold">
             ${menu.name}
           </a>
           <p class="text-lg font-medium bg-blue-500 px-2 rounded-full text-white">
@@ -460,19 +473,22 @@
 
     const appendMenuCards = () => {
       $('#menu-section').html('')
-      const isHot = (hot == 'Hot')
+      const isSpicy = (hot == 'Spicy')
       const isHalal = (halal == 'Halal')
       const isVegetarian = (vegetarian == 'Vegetarian')
+      const isPeanut = (peanut == 'Contains Peanut')
+      const isShrimp = (shrimp == 'Contains Shrimp')
+      const isLactose = (lactose == 'Contains Lactose')
       const filteredMenus = menus.filter((menu) => (
         menu.name.toLowerCase().includes(keyword) &&
         minPrice <= menu.price && menu.price <= maxPrice &&
         (category == 'All' || menu.category == category) &&
-        (hot == 'All' || menu.hot == isHot) && 
+        (hot == 'All' || menu.hot == isSpicy) && 
         (halal == 'All' || menu.halal == isHalal) && 
         (vegetarian == 'All' || menu.vegetarian == isVegetarian) &&
-        (peanut == null || menu.peanut == peanut) && 
-        (shrimp == null || menu.shrimp == shrimp) && 
-        (lactose == null || menu.lactose == lactose)
+        (peanut == 'All' || menu.peanut == isPeanut) && 
+        (shrimp == 'All' || menu.shrimp == isShrimp) && 
+        (lactose == 'All' || menu.lactose == isLactose)
       ))
       filteredMenus.forEach((menu) => {
         $('#menu-section').append(menuCard(menu))
@@ -483,10 +499,10 @@
           order_menu_id = localStorage.getItem(`order-menu-${menu.id}`)
           if (order_menu_id != null) {
             $.get(`/api/order-menu/${order_menu_id}`, (order_menu) => {
-              $('#portion-input').val(order_menu.quantity)
+              $('.portion-input').val(order_menu.quantity)
             })
           }
-          else $('#portion-input').val(1)
+          else $('.portion-input').val(1)
         })
       })
     }
@@ -523,9 +539,10 @@
       hot = $('#hot').val()
       halal = $('#halal').val()
       vegetarian = $('#vegetarian').val()
-      peanut = $('#peanut').is(':checked')
-      shrimp = $('#shrimp').is(':checked')
-      lactose = $('#lactose').is(':checked')
+      peanut = $('#peanut').val()
+      shrimp = $('#shrimp').val()
+      lactose = $('#lactose').val()
+      console.log(peanut, shrimp, lactose)
       
       category = $('#category').val()
       if (category != 'All') {
@@ -612,11 +629,11 @@
         $('#active-vegetarian').html('')
       }
 
-      if (peanut) {
+      if (peanut != 'All') {
         $('#active-hot').html(`
           <button id="active-peanut-button" class="ml-4 bg-blue-400 py-2 px-4 rounded-full">
             <div class="flex items-center">
-              Peanut
+              ${peanut}
               <svg class="ml-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
               </svg>
@@ -624,17 +641,17 @@
           </button>
         `)
         $('#active-peanut-button').click(() => {
-          peanut = null
+          peanut = 'All'
           $('#active-peanut-button').remove()
           appendMenuCards()
         })
       }
 
-      if (shrimp) {
+      if (shrimp != 'All') {
         $('#active-shrimp').html(`
           <button id="active-shrimp-button" class="ml-4 bg-blue-400 py-2 px-4 rounded-full">
             <div class="flex items-center">
-              Shrimp
+              ${shrimp}
               <svg class="ml-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
               </svg>
@@ -642,17 +659,17 @@
           </button>
         `)
         $('#active-shrimp-button').click(() => {
-          shrimp = null
+          shrimp = 'All'
           $('#active-shrimp-button').remove()
           appendMenuCards()
         })
       }
 
-      if (lactose) {
+      if (lactose != 'All') {
         $('#active-lactose').html(`
           <button id="active-lactose-button" class="ml-4 bg-blue-400 py-2 px-4 rounded-full">
             <div class="flex items-center">
-              Lactose
+              ${lactose}
               <svg class="ml-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
               </svg>
@@ -660,7 +677,7 @@
           </button>
         `)
         $('#active-lactose-button').click(() => {
-          lactose = null
+          lactose = 'All'
           $('#active-lactose-button').remove()
           appendMenuCards()
         })
@@ -743,10 +760,10 @@
                 order_menu_id = localStorage.getItem(`order-menu-${order_menu.menu.id}`)
                 if (order_menu_id != null) {
                   $.get(`/api/order-menu/${order_menu_id}`, (order_menu) => {
-                    $('#portion-input').val(order_menu.quantity)
+                    $('.portion-input').val(order_menu.quantity)
                   })
                 }
-                else $('#portion-input').val(1)
+                else $('.portion-input').val(1)
               })
             })
           })
@@ -769,14 +786,14 @@
       $('#cart-modal').addClass('hidden')
     })
 
-    $('#decrement-portion').click(() => {
-      const curPortion = parseInt($('#portion-input').val())
-      $('#portion-input').val(Math.max(0,curPortion-1))
+    $('.decrement-portion').click(() => {
+      const curPortion = parseInt($('.portion-input').val())
+      $('.portion-input').val(Math.max(0,curPortion-1))
     })
 
-    $('#increment-portion').click(() => {
-      const curPortion = parseInt($('#portion-input').val())
-      $('#portion-input').val(curPortion+1)
+    $('.increment-portion').click(() => {
+      const curPortion = parseInt($('.portion-input').val())
+      $('.portion-input').val(curPortion+1)
     })
 
     $('#new-order-menu-form').submit((e) => {

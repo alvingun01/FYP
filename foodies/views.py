@@ -7,7 +7,7 @@ from foodies.models import *
 from foodies.forms import *
 from foodies.serializers import *
 import time
-# import os, sys 
+import os, sys 
 # import win32print
 
 def start(request):
@@ -247,6 +247,20 @@ def order_menu_v2_api(request, order_id, menu_id):
                     )
                     new_order_menu_serialized = OrderMenuSerializer(instance=new_order_menu)
                     return Response(new_order_menu_serialized.data, status=status.HTTP_201_CREATED)
+                else:
+                    # print('HEREs', prev_order_menu[0].id)
+                    order_menu = OrderMenu.objects.get(id=prev_order_menu[0].id)
+                    form = OrderMenuForm(request.POST)
+                    if (form.is_valid() and order_menu != None):
+                        # print('HEREs')
+                        order_menu.quantity = form.cleaned_data.get('quantity')
+                        if (order_menu.quantity == 0):
+                            OrderMenu.objects.get(id=prev_order_menu[0].id).delete()
+                        else:
+                            order_menu.save()
+                        order_menu_serialized = OrderMenuSerializer(instance=order_menu)
+                        return Response(order_menu_serialized.data, status=status.HTTP_200_OK)
+                    return Response(status=status.HTTP_400_BAD_REQUEST)
                 return Response(status=status.HTTP_400_BAD_REQUEST)
             return Response(status=status.HTTP_400_BAD_REQUEST)
         return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -288,20 +302,20 @@ def checkout_api(request, id):
         OrderStall.objects.filter(order_id=id, menus__isnull=True).delete()
         order_serialized = OrderSerializer(instance=order)
 
-        # # Print receipt
-        # def truncate(str, max_length):
-        #     if (len(str) <= max_length): return str
-        #     return f"{str[:max_length-3]}..."
+        # Print receipt
+        def truncate(str, max_length):
+            if (len(str) <= max_length): return str
+            return f"{str[:max_length-3]}..."
         
-        # receipt = f"\n\n\n\n{'='*33}\n\n{'RECEIPT':^33}\n\n"
-        # total = 0
-        # for order_stall in order_serialized.data['stalls']:
-        #     receipt += f"{order_stall['stall']['name']}\n"
-        #     for order_menu in order_stall['menus']:
-        #         total += order_menu['quantity']*order_menu['menu']['price']
-        #         receipt += f"  {order_menu['quantity']:>2}x {truncate(order_menu['menu']['name'],20):20} ${order_menu['quantity']*order_menu['menu']['price']:>6.2f}\n"
-        # receipt += f"\n\n{'Total':26} ${total:>6.2f}\n\n{'='*33}\n"
-        # receipt = bytes(receipt, 'utf-8')
+        receipt = f"\n\n\n\n{'='*33}\n\n{'RECEIPT':^33}\n\n"
+        total = 0
+        for order_stall in order_serialized.data['stalls']:
+            receipt += f"{order_stall['stall']['name']}\n"
+            for order_menu in order_stall['menus']:
+                total += order_menu['quantity']*order_menu['menu']['price']
+                receipt += f"  {order_menu['quantity']:>2}x {truncate(order_menu['menu']['name'],20):20} ${order_menu['quantity']*order_menu['menu']['price']:>6.2f}\n"
+        receipt += f"\n\n{'Total':26} ${total:>6.2f}\n\n{'='*33}\n"
+        receipt = bytes(receipt, 'utf-8')
 
         # p = win32print.OpenPrinter("___") # TODO: Insert printer's name
         # job = win32print.StartDocPrinter(p, 1, ("test of raw data", None, "RAW")) 
@@ -325,11 +339,17 @@ def random_api(request):
         max_price = float(request.GET.get('maxPrice'))
         category = request.GET.get('category')
         hot = request.GET.get('hot') == 'true'
-        vegetarian = request.GET.get('vegetarian') == 'true'
-        halal = request.GET.get('halal') == 'true'
-        peanut = request.GET.get('peanut') == 'true'
-        shrimp = request.GET.get('shrimp') == 'true'
-        lactose = request.GET.get('lactose') == 'true'
+        vegetarian, halal, peanut, shrimp, lactose = None, None, None, None, None
+        if (request.GET.get('vegetarian') != None):
+            vegetarian = request.GET.get('vegetarian') == 'true'
+        if (request.GET.get('halal') != None):
+            halal = request.GET.get('halal') == 'true'
+        if (request.GET.get('peanut') != None):
+            peanut = request.GET.get('peanut') == 'true'
+        if (request.GET.get('shrimp') != None):
+            shrimp = request.GET.get('shrimp') == 'true'
+        if (request.GET.get('lactose') != None):
+            lactose = request.GET.get('lactose') == 'true'
 
         def filter_menu(menu):
             return (
@@ -338,15 +358,18 @@ def random_api(request):
                 (hot == None or menu['hot'] == hot) and 
                 (vegetarian == None or menu['vegetarian'] == vegetarian) and 
                 (halal == None or menu['halal'] == halal) and 
-                (not peanut or menu['peanut'] == peanut) and
-                (not shrimp or menu['shrimp'] == shrimp) and
-                (not lactose or menu['lactose'] == lactose)
+                (peanut == None or menu['peanut'] == peanut) and
+                (shrimp == None or menu['shrimp'] == shrimp) and
+                (lactose == None or menu['lactose'] == lactose)
             )
 
         menus = Menu.objects.all()
         menus_serialized = MenuSerializer(instance=menus, many=True) 
+        print(menus_serialized.data)
         filtered_menus = list(filter(filter_menu, menus_serialized.data))
         
+        print(filtered_menus)
+
         if (len(filtered_menus) > 0):
             chosen_menu = random.choice(filtered_menus)
             return Response(chosen_menu, status=status.HTTP_200_OK)
