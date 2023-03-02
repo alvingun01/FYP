@@ -39,3 +39,4 @@ class OrderMenu(models.Model):
     order_stall = models.ForeignKey(OrderStall, on_delete=models.CASCADE, related_name='menus')
     menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
     quantity = models.IntegerField()
+    notes = models.TextField(blank=True)

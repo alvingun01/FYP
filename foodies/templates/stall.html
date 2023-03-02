@@ -53,8 +53,8 @@
           <option value="Japanese">Japanese</option>
           <option value="Chinese">Chinese</option>
           <option value="Western">Western</option>
-          <option value="Arabian">Arabian</option>
-          <option value="Indian">Indian</option>
+          <option value="Western">Arabian</option>
+          <option value="Western">Indian</option>
         </select>
         <p class="mt-4">Spicy</p>
         <select id="recommendation-hot" class="w-40 rounded-lg">
@@ -131,6 +131,9 @@
             +
           </button>
         </div>
+        <div class="px-4 w-full">
+          <textarea placeholder="Notes (Optional)" name="notes" class="notes-input w-full rounded-md"></textarea>
+        </div>
         <div class="p-4">
           <div class="flex justify-between">
             <div></div>
@@ -200,6 +203,9 @@
             +
           </button>
         </div>
+        <div class="px-4 w-full">
+          <textarea placeholder="Notes (Optional)" name="notes" class="notes-input w-full rounded-md"></textarea>
+        </div>
         <div class="p-4">
           <div class="flex justify-between">
             <div></div>
@@ -241,8 +247,8 @@
           <option value="Japanese">Japanese</option>
           <option value="Chinese">Chinese</option>
           <option value="Western">Western</option>
-          <option value="Arabian">Arabian</option>
-          <option value="Indian">Indian</option>
+          <option value="Western">Arabian</option>
+          <option value="Western">Indian</option>
         </select>
         <p class="mt-4">Spicy</p>
         <select id="hot" class="w-40 rounded-lg">
@@ -423,7 +429,6 @@
 
     $('#new-menu-recommendation-form').submit((e) => {
       e.preventDefault()
-      console.log('HALO')
       order_id = localStorage.getItem('order')
       $.ajax({
         url: `/api/order-menu/v2/${order_id}/${recommendationMenu.id}/`,
@@ -460,10 +465,10 @@
         <div class="bg-black py-4 px-6 text-white text-xl rounded-bl-lg">
           ${menu.id}
         </div>
-        <div class="flex justify-between items-center bg-white/75 w-full p-4 rounded-br-lg">
-          <a class="text-xl font-bold">
+        <div class="flex justify-between items-center bg-white/50 w-full p-4 rounded-br-lg">
+          <p class="text-xl font-bold">
             ${menu.name}
-          </a>
+          </p>
           <p class="text-lg font-medium bg-blue-500 px-2 rounded-full text-white">
             $ ${menu.price}
           </p>
@@ -542,7 +547,6 @@
       peanut = $('#peanut').val()
       shrimp = $('#shrimp').val()
       lactose = $('#lactose').val()
-      console.log(peanut, shrimp, lactose)
       
       category = $('#category').val()
       if (category != 'All') {
@@ -719,6 +723,8 @@
       $('#order-menu-modal').addClass('hidden')
     })
 
+    let oldOrderMenuQuantity = 0
+
     $('#cart-modal-open-button').click(() => {
       $('#cart-modal').removeClass('hidden')
       const order_id = localStorage.getItem('order')
@@ -743,9 +749,14 @@
             order_stall.menus.forEach((order_menu, idx) => {
               $(`#cart-menu-section-${order_stall.id}`).append(`
                 <div id="cart-menu-${order_menu.id}" class="mt-1 px-2 py-1 shadow-md rounded-md hover:bg-gray-100 flex justify-between">
-                  <p>
-                    ${order_menu.quantity} ${order_menu.menu.name}
-                  </p>
+                  <div>
+                    <a>
+                      ${order_menu.quantity} ${order_menu.menu.name}
+                    </a>
+                    <p class="text-gray-500 text-sm">
+                      ${order_menu.notes}
+                    </p>
+                  </div>
                   <p id="cart-menu-price-${order_menu.id}">
                     $${order_menu.quantity * order_menu.menu.price}
                   </p>
@@ -760,7 +771,9 @@
                 order_menu_id = localStorage.getItem(`order-menu-${order_menu.menu.id}`)
                 if (order_menu_id != null) {
                   $.get(`/api/order-menu/${order_menu_id}`, (order_menu) => {
+                    oldOrderMenuQuantity = order_menu.quantity
                     $('.portion-input').val(order_menu.quantity)
+                    $('.notes-input').val(order_menu.notes)
                   })
                 }
                 else $('.portion-input').val(1)
@@ -808,6 +821,11 @@
           dataType: 'json',
           success: (order_menu) => {
             localStorage.setItem(`order-menu-${activeMenu.id}`, order_menu.id)
+            
+            let oldCntOrderMenu = parseInt(localStorage.getItem(`cnt-order-menu-${order_stall_id}`))
+            if (!oldCntOrderMenu) oldCntOrderMenu = 0
+            localStorage.setItem(`cnt-order-menu-${order_stall_id}`, oldCntOrderMenu+parseInt($('.portion-input').val()))
+
           },
           error: () => {
             alert('Failed to add menu')
@@ -816,18 +834,51 @@
       }
       else {
         $.ajax({
-          url: `/api/order-menu/${order_menu_id}/`,
-          type: 'PUT',
-          data: $('#new-order-menu-form').serialize(),
-          dataType: 'json',
-          success: (order_menu) => {
-            if (order_menu.quantity != 0) return
-            localStorage.removeItem(`order-menu-${activeMenu.id}`)
-          },
-          error: () => {
-            alert('Failed to update menu')
+        url: `/api/order-menu/${order_menu_id}/`,
+        type: 'PUT',
+        data: $('#new-order-menu-form').serialize(),
+        dataType: 'json',
+        success: (order_menu) => {
+          let oldCntOrderMenu = parseInt(localStorage.getItem(`cnt-order-menu-${order_stall_id}`))
+          if (!oldCntOrderMenu) oldCntOrderMenu = 0
+          localStorage.setItem(`cnt-order-menu-${order_stall_id}`, oldCntOrderMenu - oldOrderMenuQuantity + parseInt($('.portion-input').val()))
+
+          const old_price = parseInt($(`#cart-menu-price-${order_menu.id}`).text().trim().substring(1))
+          if (order_menu.quantity != 0) {
+            $(`#cart-menu-${order_menu.id}`).html(`
+              <div class="px-2 py-1">
+                <a>
+                  ${order_menu.quantity} ${order_menu.menu.name}
+                </a>
+                <p class="text-gray-500 text-sm">
+                  ${order_menu.notes}
+                </p>
+              </div>
+                
+              <p id="cart-menu-price-${order_menu.id}" class="px-2">
+                $${order_menu.quantity * order_menu.menu.price}
+              </p>
+            `)
           }
-        })
+          else {
+            $(`#cart-menu-${order_menu.id}`).remove()
+          }
+          total -= old_price
+          total += order_menu.quantity * order_menu.menu.price
+          $('#total-price').text(`$${total}`)
+          if (order_menu.quantity == 0) {
+            localStorage.removeItem(`order-menu-${activeMenu.id}`)
+          }
+          
+          const cntOrderMenu = parseInt(localStorage.getItem(`cnt-order-menu-${order_stall_id}`))
+          if (cntOrderMenu == 0) {
+            $(`#cart-stall-${order_stall_id}`).remove()
+          }
+        },
+        error: () => {
+          alert('Failed to update menu')
+        }
+      })
       }
       $('#order-menu-modal').addClass('hidden')
     })

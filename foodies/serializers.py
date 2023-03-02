@@ -25,7 +25,7 @@ class OrderMenuSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OrderMenu
-        fields = ['id','menu','quantity']
+        fields = ['id','menu','quantity','notes']
 
 class OrderStallSerializer(serializers.ModelSerializer):
     menus = OrderMenuSerializer(many=True, read_only=True)

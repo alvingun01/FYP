@@ -20,4 +20,4 @@ class OrderForm(ModelForm):
 class OrderMenuForm(ModelForm):
     class Meta:
         model = OrderMenu
-        fields = ['quantity']
+        fields = ['quantity','notes']
