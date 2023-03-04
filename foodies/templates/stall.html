@@ -891,6 +891,7 @@
         dataType: 'json',
         success: (order_menu) => {
           alert('Success')
+          window.location.href = '/start'
         },
         error: () => {
           alert('Failed to checkout order')
