@@ -16,16 +16,16 @@
       <img src="{% static 'food.webp' %}" class="w-full" />
       <div class="flex justify-center">
         <h1 class="text-3xl font-bold">
-          Need some recommendation?
+          需要一些建议吗？
         </h1>
       </div>
       <div class="mt-4 flex justify-center">
         <div class="flex">
           <button class="recommendation-close-button px-4 py-2 bg-red-500 rounded-lg text-2xl text-white hover:bg-red-600 duration-300">
-            No
+            不
           </button>
           <button id="get-recommendation-button" class="ml-4 px-4 py-2 bg-blue-500 rounded-lg text-2xl text-white hover:bg-blue-600 duration-300">
-            Yes
+            是
           </button>
         </div>
       </div>
@@ -35,7 +35,7 @@
     <div class="w-fit bg-white rounded-lg">
       <div class="p-4 border-b-2 border-gray-300 flex justify-between">
         <h1 class="text-xl font-bold">
-          Filter
+          筛选
         </h1>
         <button type="button" class="filter-recommendation-modal-close-button bg-white rounded-md inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-inset focus:ring-indigo-500">
           <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -44,56 +44,56 @@
         </button>
       </div>
       <div class="p-4">
-        <p>Price</p>
+        <p>价格</p>
         <div class="flex items-center">
           <input type="number" id="recommendation-min-price" placeholder="MIN" class="w-40 rounded-lg">
           <p class="ml-2">-</p>
           <input type="number" id="recommendation-max-price" placeholder="MAX" class="w-40 ml-2 rounded-lg">
         </div>
-        <p class="mt-4">Category</p>
+        <p class="mt-4">类别</p>
         <select id="recommendation-category" class="w-40 rounded-lg">
-          <option value="All">All</option>
-          <option value="Japanese">Japanese</option>
-          <option value="Chinese">Chinese</option>
-          <option value="Western">Western</option>
-          <option value="Western">Arabian</option>
-          <option value="Western">Indian</option>
+          <option value="All">全部</option>
+          <option value="Japanese">日本</option>
+          <option value="Chinese">中国</option>
+          <option value="Western">西</option>
+          <option value="Arabian">阿拉伯</option>
+          <option value="Indian">印第安</option>
         </select>
-        <p class="mt-4">Spicy</p>
+        <p class="mt-4">辛辣的</p>
         <select id="recommendation-hot" class="w-40 rounded-lg">
-          <option value="All">All</option>
-          <option value="Spicy">Spicy</option>
-          <option value="Non-Spicy">Non-Spicy</option>
+          <option value="All">全部</option>
+          <option value="Spicy">辛辣的</option>
+          <option value="Non-Spicy">不辣</option>
         </select>
-        <p class="mt-4">Vegetarian</p>
+        <p class="mt-4">素食主义者</p>
         <select id="recommendation-vegetarian" class="w-40 rounded-lg">
-          <option value="All">All</option>
-          <option value="Vegetarian">Vegetarian</option>
-          <option value="Non-Vegetarian">Non-Vegetarian</option>
+          <option value="All">全部</option>
+          <option value="Vegetarian">素食主义者</option>
+          <option value="Non-Vegetarian">不是素食主义者</option>
         </select>
-        <p class="mt-4">Halal</p>
+        <p class="mt-4">清真</p>
         <select id="recommendation-halal" class="w-40 rounded-lg">
-          <option value="All">All</option>
-          <option value="Halal">Halal</option>
-          <option value="Non-Halal">Non-Halal</option>
+          <option value="All">全部</option>
+          <option value="Halal">清真</option>
+          <option value="Non-Halal">不清真</option>
         </select>
-        <p class="mt-4">Peanut</p>
+        <p class="mt-4">花生</p>
         <select id="recommendation-peanut" class="w-40 rounded-lg">
-          <option value="All">All</option>
-          <option value="Contains Peanut">Contains Peanut</option>
-          <option value="No Peanut">No Peanut</option>
+          <option value="All">全部</option>
+          <option value="Contains Peanut">含有花生</option>
+          <option value="No Peanut">不含花生</option>
         </select>
-        <p class="mt-4">Shrimp</p>
+        <p class="mt-4">虾</p>
         <select id="recommendation-shrimp" class="w-40 rounded-lg">
-          <option value="All">All</option>
-          <option value="Contains Shrimp">Contains Shrimp</option>
-          <option value="No Shrimp">No Shrimp</option>
+          <option value="All">全部</option>
+          <option value="Contains Shrimp">包含虾</option>
+          <option value="No Shrimp">不含虾</option>
         </select>
-        <p class="mt-4">Lactose</p>
+        <p class="mt-4">乳糖</p>
         <select id="recommendation-lactose" class="w-40 rounded-lg">
-          <option value="All">All</option>
-          <option value="Contains Lactose">Contains Lactose</option>
-          <option value="No Lactose">No Lactose</option>
+          <option value="All">全部</option>
+          <option value="Contains Lactose">含有乳糖</option>
+          <option value="No Lactose">不含乳糖</option>
         </select>
       </div>
       <div class="p-4">
@@ -101,10 +101,10 @@
           <div></div>
           <div>
             <button class="filter-recommendation-modal-close-button bg-gray-200 py-2 px-4 rounded-lg text-lg hover:bg-gray-300">
-              Cancel
+              取消
             </button>
             <button id="filter-recommendation" class="ml-2 bg-blue-500 py-2 px-4 rounded-lg text-lg text-white hover:bg-blue-600">
-              Filter
+              筛选
             </button>
           </div>
         </div>
@@ -141,11 +141,11 @@
           <div class="flex justify-between">
             <div></div>
             <div>
-              <button type="button" class="menu-recommendation-modal-close-button bg-gray-200 py-2 px-4 rounded-lg text-lg hover:bg-gray-300">
-                Cancel
+              <button type='button' class="menu-recommendation-modal-close-button bg-gray-200 py-2 px-4 rounded-lg text-lg hover:bg-gray-300">
+                取消
               </button>
               <button type="submit" class="clear-timeout ml-2 bg-blue-500 py-2 px-4 rounded-lg text-lg text-white hover:bg-blue-600">
-                Save
+                节省
               </button>
             </div>
           </div>
@@ -157,7 +157,7 @@
     <div class="w-1/3 bg-white rounded-lg">
       <div class="p-4 border-b-2 border-gray-300 flex justify-between">
         <h1 class="text-xl font-bold">
-          My Cart
+          我的车
         </h1>
         <button type="button" class="cart-modal-close-button bg-white rounded-md inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-inset focus:ring-indigo-500">
           <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -166,17 +166,17 @@
         </button>
       </div>
       <div id="cart-stall-section" class="p-4">
-        Loading...
+        加载中...
       </div>
       <div class="p-4">
         <div class="flex justify-between">
           <div></div>
           <div>
             <button class="cart-modal-close-button bg-gray-200 py-2 px-4 rounded-lg text-lg hover:bg-gray-300">
-              Cancel
+              取消
             </button>
             <button id="checkout-button" class="ml-2 bg-blue-500 py-2 px-4 rounded-lg text-lg text-white hover:bg-blue-600">
-              Checkout
+              查看
             </button>
           </div>
         </div>
@@ -214,10 +214,10 @@
             <div></div>
             <div>
               <button class="order-menu-modal-close-button bg-gray-200 py-2 px-4 rounded-lg text-lg hover:bg-gray-300">
-                Cancel
+                取消
               </button>
               <button type="submit" class="clear-timeout ml-2 bg-blue-500 py-2 px-4 rounded-lg text-lg text-white hover:bg-blue-600">
-                Save
+                节省
               </button>
             </div>
           </div>
@@ -229,7 +229,7 @@
     <div class="w-fit bg-white rounded-lg">
       <div class="p-4 border-b-2 border-gray-300 flex justify-between">
         <h1 class="text-xl font-bold">
-          Filter
+          筛选
         </h1>
         <button type="button" class="filter-modal-close-button bg-white rounded-md inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-inset focus:ring-indigo-500">
           <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -238,56 +238,56 @@
         </button>
       </div>
       <div class="p-4">
-        <p>Price</p>
+        <p>价格</p>
         <div class="flex items-center">
           <input type="number" id="min-price" placeholder="MIN" class="w-40 rounded-lg">
           <p class="ml-2">-</p>
           <input type="number" id="max-price" placeholder="MAX" class="w-40 ml-2 rounded-lg">
         </div>
-        <p class="mt-4">Category</p>
+        <p class="mt-4">类别</p>
         <select id="category" class="w-40 rounded-lg">
-          <option value="All">All</option>
-          <option value="Japanese">Japanese</option>
-          <option value="Chinese">Chinese</option>
-          <option value="Western">Western</option>
-          <option value="Western">Arabian</option>
-          <option value="Western">Indian</option>
+          <option value="All">全部</option>
+          <option value="Japanese">日本</option>
+          <option value="Chinese">中国</option>
+          <option value="Western">西</option>
+          <option value="Arabian">阿拉伯</option>
+          <option value="Indian">印第安</option>
         </select>
-        <p class="mt-4">Spicy</p>
+        <p class="mt-4">辛辣的</p>
         <select id="hot" class="w-40 rounded-lg">
-          <option value="All">All</option>
-          <option value="Spicy">Spicy</option>
-          <option value="Non-Spicy">Non-Spicy</option>
+          <option value="All">全部</option>
+          <option value="Spicy">辛辣的</option>
+          <option value="Non-Spicy">不辣</option>
         </select>
-        <p class="mt-4">Vegetarian</p>
+        <p class="mt-4">素食主义者</p>
         <select id="vegetarian" class="w-40 rounded-lg">
-          <option value="All">All</option>
-          <option value="Vegetarian">Vegetarian</option>
-          <option value="Non-Vegetarian">Non-Vegetarian</option>
+          <option value="All">全部</option>
+          <option value="Vegetarian">素食主义者</option>
+          <option value="Non-Vegetarian">不是素食主义者</option>
         </select>
-        <p class="mt-4">Halal</p>
+        <p class="mt-4">清真</p>
         <select id="halal" class="w-40 rounded-lg">
-          <option value="All">All</option>
-          <option value="Halal">Halal</option>
-          <option value="Non-Halal">Non-Halal</option>
+          <option value="All">全部</option>
+          <option value="Halal">清真</option>
+          <option value="Non-Halal">不清真</option>
         </select>
-        <p class="mt-4">Peanut</p>
+        <p class="mt-4">花生</p>
         <select id="peanut" class="w-40 rounded-lg">
-          <option value="All">All</option>
-          <option value="Contains Peanut">Contains Peanut</option>
-          <option value="No Peanut">No Peanut</option>
+          <option value="All">全部</option>
+          <option value="Contains Peanut">含有花生</option>
+          <option value="No Peanut">不含花生</option>
         </select>
-        <p class="mt-4">Shrimp</p>
+        <p class="mt-4">虾</p>
         <select id="shrimp" class="w-40 rounded-lg">
           <option value="All">All</option>
           <option value="Contains Shrimp">Contains Shrimp</option>
           <option value="No Shrimp">No Shrimp</option>
         </select>
-        <p class="mt-4">Lactose</p>
+        <p class="mt-4">乳糖</p>
         <select id="lactose" class="w-40 rounded-lg">
-          <option value="All">All</option>
-          <option value="Contains Lactose">Contains Lactose</option>
-          <option value="No Lactose">No Lactose</option>
+          <option value="All">全部</option>
+          <option value="Contains Lactose">含有乳糖</option>
+          <option value="No Lactose">不含乳糖</option>
         </select>
       </div>
       <div class="p-4">
@@ -295,10 +295,10 @@
           <div></div>
           <div>
             <button class="filter-modal-close-button bg-gray-200 py-2 px-4 rounded-lg text-lg hover:bg-gray-300">
-              Cancel
+              取消
             </button>
             <button id="filter" class="ml-2 bg-blue-500 py-2 px-4 rounded-lg text-lg text-white hover:bg-blue-600">
-              Filter
+              筛选
             </button>
           </div>
         </div>
@@ -312,8 +312,8 @@
       </div>
       <div class="flex items-center mt-4">
         <input type="text" id="search" class="w-full rounded-lg" placeholder="Search">
-        <button id="filter-modal-open-button" class="ml-4 py-2 px-4 bg-blue-500 text-white text-xl rounded-lg hover:bg-blue-600">
-          Filter
+        <button id="filter-modal-open-button" class="ml-4 py-2 px-4 whitespace-nowrap bg-blue-500 text-white text-xl rounded-lg hover:bg-blue-600">
+          筛选
         </button>
       </div>
       <div class="mt-4 flex">
@@ -377,7 +377,7 @@
     })
 
     $('#toggle-language').click(() => {
-      window.location.href = `/stall/ch/${stall_id}`
+      window.location.href = `/stall/${stall_id}`
     })
 
     let recommendationMenu = null
@@ -523,7 +523,7 @@
       menus = stall.menus
       $('#stall-section').append(`
         <div class="flex items-center">
-          <a id='back-button' href='/'>
+          <a id='back-button' href='/ch/'>
             <img class="h-8" src="{% static 'back-button.svg' %}" />
           </a>
           <h1 class="ml-2 text-3xl font-bold">
@@ -789,7 +789,7 @@
           })
           $('#cart-stall-section').append(`
             <div class="pr-2 flex justify-between">
-              <h1 class="font-bold text-lg">Total</h1>
+              <h1 class="font-bold text-lg">全部的</h1>
               <h1 id="total-price" class="font-bold text-lg">
                 $${total}
               </h1>

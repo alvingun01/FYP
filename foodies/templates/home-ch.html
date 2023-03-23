@@ -3,29 +3,29 @@
 
 {% block content %}
 
-<div class="relative">
+<div class="relative h-screen w-full">
   <div class="fixed bottom-10 left-10">
     <img id="toggle-language" src="{% static 'language.svg' %}" class="h-16">
   </div>
   <div class="fixed bottom-10 right-10 flex">
     <img id="filter-recommendation-modal-open-button" src="{% static 'chef.svg' %}" alt="recommendation" class="z-1000 w-20 h-20 hover:brightness-50 duration-300">
     <img id="cart-modal-open-button" src="{% static 'shopping-cart.png' %}" alt="cart" class="z-1000 ml-8 w-20 h-20 hover:brightness-50 duration-300">
-  </div>  
+  </div>
   <div id="recommendation-modal" class="hidden fixed h-screen w-full left-0 top-0 z-10 bg-black bg-opacity-50 flex justify-center items-center">
     <div class="bg-white rounded-lg p-10 pt-4">
       <img src="{% static 'food.webp' %}" class="w-full" />
       <div class="flex justify-center">
         <h1 class="text-3xl font-bold">
-          Need some recommendation?
+          需要一些建议吗？
         </h1>
       </div>
       <div class="mt-4 flex justify-center">
         <div class="flex">
           <button class="recommendation-close-button px-4 py-2 bg-red-500 rounded-lg text-2xl text-white hover:bg-red-600 duration-300">
-            No
+            不
           </button>
           <button id="get-recommendation-button" class="ml-4 px-4 py-2 bg-blue-500 rounded-lg text-2xl text-white hover:bg-blue-600 duration-300">
-            Yes
+            是
           </button>
         </div>
       </div>
@@ -35,7 +35,7 @@
     <div class="w-fit bg-white rounded-lg">
       <div class="p-4 border-b-2 border-gray-300 flex justify-between">
         <h1 class="text-xl font-bold">
-          Filter
+          筛选
         </h1>
         <button type="button" class="filter-recommendation-modal-close-button bg-white rounded-md inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-inset focus:ring-indigo-500">
           <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -44,56 +44,56 @@
         </button>
       </div>
       <div class="p-4">
-        <p>Price</p>
+        <p>价格</p>
         <div class="flex items-center">
           <input type="number" id="recommendation-min-price" placeholder="MIN" class="w-40 rounded-lg">
           <p class="ml-2">-</p>
           <input type="number" id="recommendation-max-price" placeholder="MAX" class="w-40 ml-2 rounded-lg">
         </div>
-        <p class="mt-4">Category</p>
+        <p class="mt-4">类别</p>
         <select id="recommendation-category" class="w-40 rounded-lg">
-          <option value="All">All</option>
-          <option value="Japanese">Japanese</option>
-          <option value="Chinese">Chinese</option>
-          <option value="Western">Western</option>
-          <option value="Western">Arabian</option>
-          <option value="Western">Indian</option>
+          <option value="All">全部</option>
+          <option value="Japanese">日本</option>
+          <option value="Chinese">中国</option>
+          <option value="Western">西</option>
+          <option value="Arabian">阿拉伯</option>
+          <option value="Indian">印第安</option>
         </select>
-        <p class="mt-4">Spicy</p>
+        <p class="mt-4">辛辣的</p>
         <select id="recommendation-hot" class="w-40 rounded-lg">
-          <option value="All">All</option>
-          <option value="Spicy">Spicy</option>
-          <option value="Non-Spicy">Non-Spicy</option>
+          <option value="All">全部</option>
+          <option value="Spicy">辛辣的</option>
+          <option value="Non-Spicy">不辣</option>
         </select>
-        <p class="mt-4">Vegetarian</p>
+        <p class="mt-4">素食主义者</p>
         <select id="recommendation-vegetarian" class="w-40 rounded-lg">
-          <option value="All">All</option>
-          <option value="Vegetarian">Vegetarian</option>
-          <option value="Non-Vegetarian">Non-Vegetarian</option>
+          <option value="All">全部</option>
+          <option value="Vegetarian">素食主义者</option>
+          <option value="Non-Vegetarian">不是素食主义者</option>
         </select>
-        <p class="mt-4">Halal</p>
+        <p class="mt-4">清真</p>
         <select id="recommendation-halal" class="w-40 rounded-lg">
-          <option value="All">All</option>
-          <option value="Halal">Halal</option>
-          <option value="Non-Halal">Non-Halal</option>
+          <option value="All">全部</option>
+          <option value="Halal">清真</option>
+          <option value="Non-Halal">不清真</option>
         </select>
-        <p class="mt-4">Peanut</p>
+        <p class="mt-4">花生</p>
         <select id="recommendation-peanut" class="w-40 rounded-lg">
-          <option value="All">All</option>
-          <option value="Contains Peanut">Contains Peanut</option>
-          <option value="No Peanut">No Peanut</option>
+          <option value="All">全部</option>
+          <option value="Contains Peanut">含有花生</option>
+          <option value="No Peanut">不含花生</option>
         </select>
-        <p class="mt-4">Shrimp</p>
+        <p class="mt-4">虾</p>
         <select id="recommendation-shrimp" class="w-40 rounded-lg">
-          <option value="All">All</option>
-          <option value="Contains Shrimp">Contains Shrimp</option>
-          <option value="No Shrimp">No Shrimp</option>
+          <option value="All">全部</option>
+          <option value="Contains Shrimp">包含虾</option>
+          <option value="No Shrimp">不含虾</option>
         </select>
-        <p class="mt-4">Lactose</p>
+        <p class="mt-4">乳糖</p>
         <select id="recommendation-lactose" class="w-40 rounded-lg">
-          <option value="All">All</option>
-          <option value="Contains Lactose">Contains Lactose</option>
-          <option value="No Lactose">No Lactose</option>
+          <option value="All">全部</option>
+          <option value="Contains Lactose">含有乳糖</option>
+          <option value="No Lactose">不含乳糖</option>
         </select>
       </div>
       <div class="p-4">
@@ -101,10 +101,10 @@
           <div></div>
           <div>
             <button class="filter-recommendation-modal-close-button bg-gray-200 py-2 px-4 rounded-lg text-lg hover:bg-gray-300">
-              Cancel
+              取消
             </button>
             <button id="filter-recommendation" class="ml-2 bg-blue-500 py-2 px-4 rounded-lg text-lg text-white hover:bg-blue-600">
-              Filter
+              筛选
             </button>
           </div>
         </div>
@@ -141,11 +141,11 @@
           <div class="flex justify-between">
             <div></div>
             <div>
-              <button type="button" class="menu-recommendation-modal-close-button bg-gray-200 py-2 px-4 rounded-lg text-lg hover:bg-gray-300">
-                Cancel
+              <button type='button' class="menu-recommendation-modal-close-button bg-gray-200 py-2 px-4 rounded-lg text-lg hover:bg-gray-300">
+                取消
               </button>
               <button type="submit" class="clear-timeout ml-2 bg-blue-500 py-2 px-4 rounded-lg text-lg text-white hover:bg-blue-600">
-                Save
+                节省
               </button>
             </div>
           </div>
@@ -157,7 +157,7 @@
     <div class="w-1/3 bg-white rounded-lg">
       <div class="p-4 border-b-2 border-gray-300 flex justify-between">
         <h1 class="text-xl font-bold">
-          My Cart
+          我的车
         </h1>
         <button type="button" class="cart-modal-close-button bg-white rounded-md inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-inset focus:ring-indigo-500">
           <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -166,22 +166,77 @@
         </button>
       </div>
       <div id="cart-stall-section" class="p-4">
-        Loading...
+        加载中...
       </div>
       <div class="p-4">
         <div class="flex justify-between">
           <div></div>
           <div>
             <button class="cart-modal-close-button bg-gray-200 py-2 px-4 rounded-lg text-lg hover:bg-gray-300">
-              Cancel
+              取消
             </button>
             <button id="checkout-button" class="ml-2 bg-blue-500 py-2 px-4 rounded-lg text-lg text-white hover:bg-blue-600">
-              Checkout
+              查看
             </button>
           </div>
         </div>
       </div>
     </div>
+  </div>
+  <div id="filter-modal" class="hidden fixed h-screen w-full left-0 top-0 z-10 bg-black bg-opacity-50 flex justify-center items-center">
+    <div class="w-1/5 bg-white rounded-lg">
+      <div class="p-4 border-b-2 border-gray-300 flex justify-between">
+        <h1 class="text-xl font-bold">
+          筛选
+        </h1>
+        <button type="button" class="filter-modal-close-button bg-white rounded-md inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-inset focus:ring-indigo-500">
+          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="p-4">
+        <p class="mt-4">类别</p>
+        <select id="category" class="w-40 rounded-lg">
+          <option value="All">全部</option>
+          <option value="Japanese">日本</option>
+          <option value="Chinese">中国</option>
+          <option value="Western">西</option>
+          <option value="Arabian">阿拉伯</option>
+          <option value="Indian">印第安</option>
+        </select>
+      </div>
+      <div class="p-4">
+        <div class="flex justify-between">
+          <div></div>
+          <div>
+            <button class="filter-modal-close-button bg-gray-200 py-2 px-4 rounded-lg text-lg hover:bg-gray-300">
+              取消
+            </button>
+            <button id="filter" class="ml-2 bg-blue-500 py-2 px-4 rounded-lg text-lg text-white hover:bg-blue-600">
+              筛选
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="mt-4 px-4">
+      <div class="flex items-center mt-4">
+        <input type="text" id="search" class="w-full rounded-lg" placeholder="搜索">
+        <button id="filter-modal-open-button" class="ml-4 py-2 whitespace-nowrap px-4 bg-blue-500 text-white text-xl rounded-lg hover:bg-blue-600">
+          筛选
+        </button>
+      </div>
+      <div id="active-filters" class="mt-4">
+
+      </div>
+      <div id="stalls-section" class="mt-4 grid grid-cols-4 gap-4 w-full">
+        
+      </div>
+    </div>
+    <div class="text-2xl"></div>
   </div>
   <div id="order-menu-modal" class="hidden fixed h-screen w-full left-0 top-0 z-10 bg-black bg-opacity-50 flex justify-center items-center">
     <div class="w-1/5 bg-white rounded-lg">
@@ -214,10 +269,10 @@
             <div></div>
             <div>
               <button class="order-menu-modal-close-button bg-gray-200 py-2 px-4 rounded-lg text-lg hover:bg-gray-300">
-                Cancel
+                取消
               </button>
               <button type="submit" class="clear-timeout ml-2 bg-blue-500 py-2 px-4 rounded-lg text-lg text-white hover:bg-blue-600">
-                Save
+                节省
               </button>
             </div>
           </div>
@@ -225,136 +280,12 @@
       </form>
     </div>
   </div>
-  <div id="filter-modal" class="hidden fixed h-screen w-full left-0 top-0 z-10 bg-black bg-opacity-50 flex justify-center items-center">
-    <div class="w-fit bg-white rounded-lg">
-      <div class="p-4 border-b-2 border-gray-300 flex justify-between">
-        <h1 class="text-xl font-bold">
-          Filter
-        </h1>
-        <button type="button" class="filter-modal-close-button bg-white rounded-md inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-inset focus:ring-indigo-500">
-          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
-      <div class="p-4">
-        <p>Price</p>
-        <div class="flex items-center">
-          <input type="number" id="min-price" placeholder="MIN" class="w-40 rounded-lg">
-          <p class="ml-2">-</p>
-          <input type="number" id="max-price" placeholder="MAX" class="w-40 ml-2 rounded-lg">
-        </div>
-        <p class="mt-4">Category</p>
-        <select id="category" class="w-40 rounded-lg">
-          <option value="All">All</option>
-          <option value="Japanese">Japanese</option>
-          <option value="Chinese">Chinese</option>
-          <option value="Western">Western</option>
-          <option value="Western">Arabian</option>
-          <option value="Western">Indian</option>
-        </select>
-        <p class="mt-4">Spicy</p>
-        <select id="hot" class="w-40 rounded-lg">
-          <option value="All">All</option>
-          <option value="Spicy">Spicy</option>
-          <option value="Non-Spicy">Non-Spicy</option>
-        </select>
-        <p class="mt-4">Vegetarian</p>
-        <select id="vegetarian" class="w-40 rounded-lg">
-          <option value="All">All</option>
-          <option value="Vegetarian">Vegetarian</option>
-          <option value="Non-Vegetarian">Non-Vegetarian</option>
-        </select>
-        <p class="mt-4">Halal</p>
-        <select id="halal" class="w-40 rounded-lg">
-          <option value="All">All</option>
-          <option value="Halal">Halal</option>
-          <option value="Non-Halal">Non-Halal</option>
-        </select>
-        <p class="mt-4">Peanut</p>
-        <select id="peanut" class="w-40 rounded-lg">
-          <option value="All">All</option>
-          <option value="Contains Peanut">Contains Peanut</option>
-          <option value="No Peanut">No Peanut</option>
-        </select>
-        <p class="mt-4">Shrimp</p>
-        <select id="shrimp" class="w-40 rounded-lg">
-          <option value="All">All</option>
-          <option value="Contains Shrimp">Contains Shrimp</option>
-          <option value="No Shrimp">No Shrimp</option>
-        </select>
-        <p class="mt-4">Lactose</p>
-        <select id="lactose" class="w-40 rounded-lg">
-          <option value="All">All</option>
-          <option value="Contains Lactose">Contains Lactose</option>
-          <option value="No Lactose">No Lactose</option>
-        </select>
-      </div>
-      <div class="p-4">
-        <div class="flex justify-between">
-          <div></div>
-          <div>
-            <button class="filter-modal-close-button bg-gray-200 py-2 px-4 rounded-lg text-lg hover:bg-gray-300">
-              Cancel
-            </button>
-            <button id="filter" class="ml-2 bg-blue-500 py-2 px-4 rounded-lg text-lg text-white hover:bg-blue-600">
-              Filter
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div>
-    <div class="mt-4 px-4">
-      <div id="stall-section" class="mt-4">
-        
-      </div>
-      <div class="flex items-center mt-4">
-        <input type="text" id="search" class="w-full rounded-lg" placeholder="Search">
-        <button id="filter-modal-open-button" class="ml-4 py-2 px-4 bg-blue-500 text-white text-xl rounded-lg hover:bg-blue-600">
-          Filter
-        </button>
-      </div>
-      <div class="mt-4 flex">
-        <div id="active-category">
-
-        </div>
-        <div id="active-price">
-
-        </div>
-        <div id="active-hot">
-
-        </div>
-        <div id="active-peanut">
-
-        </div>
-        <div id="active-shrimp">
-
-        </div>
-        <div id="active-lactose">
-
-        </div>
-        <div id="active-halal">
-
-        </div>
-        <div id="active-vegetarian">
-
-        </div>
-      </div>
-      <div id="menu-section" class="grid grid-cols-4 gap-4 w-full mt-4">
-    
-      </div>
-    </div>
-    <div class="text-2xl"></div>
-  </div>
 </div>
-<div class="h-4 h-4"></div>
+<div class="mt-1 pr-2 py-1 shadow-md rounded-md"></div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
   $(document).ready(() => {
-    stall_id = parseInt('{{ stall_id }}')
     order_id = localStorage.getItem('order')
 
     $.get(`/api/order/${order_id}`, (order) => {
@@ -377,7 +308,7 @@
     })
 
     $('#toggle-language').click(() => {
-      window.location.href = `/stall/ch/${stall_id}`
+      window.location.href = "/"
     })
 
     let recommendationMenu = null
@@ -430,10 +361,6 @@
       })
     })
 
-    $('.menu-recommendation-modal-close-button').click(() => {
-      $('#menu-recommendation-modal').addClass('hidden')
-    })
-
     $('#new-menu-recommendation-form').submit((e) => {
       e.preventDefault()
       order_id = localStorage.getItem('order')
@@ -453,90 +380,60 @@
       $('#order-menu-modal').addClass('hidden')
     })
 
-    let menus = null
-    let activeMenu = null
-
+    let all_stalls = null
+    let selected_category = null
     let keyword = ''
-    let minPrice = 0
-    let maxPrice = 9999999999999
-    let category = 'All'
-    let hot = 'All'
-    let vegetarian = 'All'
-    let halal = 'All'
-    let peanut = 'All'
-    let shrimp = 'All'
-    let lactose = 'All'
-    
-    const menuCard = (menu) => `
-      <div id="menu-${menu.id}" class="flex items-end h-60 rounded-lg bg-contain bg-no-repeat bg-center shadow-xl" style="background-image: url('${menu.photo || 'https://cdn.vox-cdn.com/thumbor/5d_RtADj8ncnVqh-afV3mU-XQv0=/0x0:1600x1067/1200x900/filters:focal(672x406:928x662)/cdn.vox-cdn.com/uploads/chorus_image/image/57698831/51951042270_78ea1e8590_h.7.jpg'}')">
+    let activeMenu = null
+    let activeStall = null
+    let total = 0
+
+    const stallCard = (stall) => `
+      <div id="stall-${stall.id}" class="flex items-end h-60 rounded-lg bg-contain bg-no-repeat bg-center shadow-xl" style="background-image: url('${stall.photo || 'https://cdn.vox-cdn.com/thumbor/5d_RtADj8ncnVqh-afV3mU-XQv0=/0x0:1600x1067/1200x900/filters:focal(672x406:928x662)/cdn.vox-cdn.com/uploads/chorus_image/image/57698831/51951042270_78ea1e8590_h.7.jpg'}')">
         <div class="bg-black py-4 px-6 text-white text-xl rounded-bl-lg">
-          ${menu.id}
+          ${stall.id}
         </div>
-        <div class="flex justify-between items-center bg-white/50 w-full p-4 rounded-br-lg">
+        <div class="bg-white/50 w-full p-4 rounded-br-lg">
           <p class="text-xl font-bold">
-            ${menu.name}
-          </p>
-          <p class="text-lg font-medium bg-blue-500 px-2 rounded-full text-white">
-            $ ${menu.price}
+            ${stall.name}
           </p>
         </div>
       </div>
     `
 
-    const appendMenuCards = () => {
-      $('#menu-section').html('')
-      const isSpicy = (hot == 'Spicy')
-      const isHalal = (halal == 'Halal')
-      const isVegetarian = (vegetarian == 'Vegetarian')
-      const isPeanut = (peanut == 'Contains Peanut')
-      const isShrimp = (shrimp == 'Contains Shrimp')
-      const isLactose = (lactose == 'Contains Lactose')
-      const filteredMenus = menus.filter((menu) => (
-        menu.name.toLowerCase().includes(keyword) &&
-        minPrice <= menu.price && menu.price <= maxPrice &&
-        (category == 'All' || menu.category == category) &&
-        (hot == 'All' || menu.hot == isSpicy) && 
-        (halal == 'All' || menu.halal == isHalal) && 
-        (vegetarian == 'All' || menu.vegetarian == isVegetarian) &&
-        (peanut == 'All' || menu.peanut == isPeanut) && 
-        (shrimp == 'All' || menu.shrimp == isShrimp) && 
-        (lactose == 'All' || menu.lactose == isLactose)
+    const appendStallCards = () => {
+      $('#stalls-section').html('')
+      const filtered_stalls = all_stalls.filter((stall) => (
+        stall.name.toLowerCase().includes(keyword) && 
+        (!selected_category || stall.category == selected_category)
       ))
-      filteredMenus.forEach((menu) => {
-        $('#menu-section').append(menuCard(menu))
-        $(`#menu-${menu.id}`).click(() => {
-          activeMenu = menu
-          $('#order-menu-modal').removeClass('hidden')
-          $('#order-menu-title').text(menu.name)
-          order_menu_id = localStorage.getItem(`order-menu-${menu.id}`)
-          if (order_menu_id != null) {
-            $.get(`/api/order-menu/${order_menu_id}`, (order_menu) => {
-              $('.portion-input').val(order_menu.quantity)
-            })
-          }
-          else $('.portion-input').val(1)
+      filtered_stalls.forEach((stall) => {
+        $('#stalls-section').append(stallCard(stall))
+        $(`#stall-${stall.id}`).click(() => {
+          const order_id = localStorage.getItem('order')
+          $.ajax({
+            url: `/api/order-stall/${order_id}/${stall.id}/`,
+            type: 'GET',
+            dataType: 'json',
+            success: (order_stall) => {
+              localStorage.setItem(`order-stall-${stall.id}`, order_stall.id)
+              location.href=`/stall/ch/${stall.id}`
+            },
+            error: () => {
+              location.href=`/stall/ch/${stall.id}`
+            }
+          })
         })
       })
     }
 
-    $.get(`/api/stall/${stall_id}`, (stall) => {
-      menus = stall.menus
-      $('#stall-section').append(`
-        <div class="flex items-center">
-          <a id='back-button' href='/'>
-            <img class="h-8" src="{% static 'back-button.svg' %}" />
-          </a>
-          <h1 class="ml-2 text-3xl font-bold">
-            ${stall.name}
-          </h1>
-        </div>
-      `)
-      appendMenuCards()
+    $.get('/api/stall/', (stalls) => {
+      all_stalls = stalls 
+      appendStallCards()
     })
 
     $('#search').change(() => {
       keyword = $('#search').val().toLowerCase()
-      appendMenuCards()
+      appendStallCards()
     })
 
     $('#filter-modal-open-button').click(() => {
@@ -548,186 +445,19 @@
     })
 
     $('#filter').click(() => {
-      hot = $('#hot').val()
-      halal = $('#halal').val()
-      vegetarian = $('#vegetarian').val()
-      peanut = $('#peanut').val()
-      shrimp = $('#shrimp').val()
-      lactose = $('#lactose').val()
-      
-      category = $('#category').val()
-      if (category != 'All') {
-        $('#active-category').html(`
-          <button id="active-category-button" class="ml-4 bg-blue-400 py-2 px-4 rounded-full">
-            <div class="flex items-center">
-              ${category}
-              <svg class="ml-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            <div>
-          </button>
-        `)
-        $('#active-category-button').click(() => {
-          category = 'All'
-          $('#active-category-button').remove()
-          appendMenuCards()
-        })
-      }
-      else {
-        $('#active-category').html('')
-      }
-
-      if (hot != 'All') {
-        $('#active-hot').html(`
-          <button id="active-hot-button" class="ml-4 bg-blue-400 py-2 px-4 rounded-full">
-            <div class="flex items-center">
-              ${hot}
-              <svg class="ml-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            <div>
-          </button>
-        `)
-        $('#active-hot-button').click(() => {
-          hot = 'All'
-          $('#active-hot-button').remove()
-          appendMenuCards()
-        })
-      }
-      else {
-        $('#active-hot').html('')
-      }
-
-      if (halal != 'All') {
-        $('#active-halal').html(`
-          <button id="active-halal-button" class="ml-4 bg-blue-400 py-2 px-4 pr-3 rounded-full">
-            <div class="flex items-center">
-              ${halal}
-              <svg class="ml-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            <div>
-          </button>
-        `)
-        $('#active-halal-button').click(() => {
-          halal = 'All'
-          $('#active-halal-button').remove()
-          appendMenuCards()
-        })
-      }
-      else {
-        $('#active-halal').html('')
-      }
-
-      if (vegetarian != 'All') {
-        $('#active-vegetarian').html(`
-          <button id="active-vegetarian-button" class="ml-4 bg-blue-400 py-2 px-4 rounded-full">
-            <div class="flex items-center">
-              ${vegetarian}
-              <svg class="ml-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            <div>
-          </button>
-        `)
-        $('#active-vegetarian-button').click(() => {
-          vegetarian = 'All'
-          $('#active-vegetarian-button').remove()
-          appendMenuCards()
-        })
-      }
-      else {
-        $('#active-vegetarian').html('')
-      }
-
-      if (peanut != 'All') {
-        $('#active-hot').html(`
-          <button id="active-peanut-button" class="ml-4 bg-blue-400 py-2 px-4 rounded-full">
-            <div class="flex items-center">
-              ${peanut}
-              <svg class="ml-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            <div>
-          </button>
-        `)
-        $('#active-peanut-button').click(() => {
-          peanut = 'All'
-          $('#active-peanut-button').remove()
-          appendMenuCards()
-        })
-      }
-
-      if (shrimp != 'All') {
-        $('#active-shrimp').html(`
-          <button id="active-shrimp-button" class="ml-4 bg-blue-400 py-2 px-4 rounded-full">
-            <div class="flex items-center">
-              ${shrimp}
-              <svg class="ml-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            <div>
-          </button>
-        `)
-        $('#active-shrimp-button').click(() => {
-          shrimp = 'All'
-          $('#active-shrimp-button').remove()
-          appendMenuCards()
-        })
-      }
-
-      if (lactose != 'All') {
-        $('#active-lactose').html(`
-          <button id="active-lactose-button" class="ml-4 bg-blue-400 py-2 px-4 rounded-full">
-            <div class="flex items-center">
-              ${lactose}
-              <svg class="ml-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            <div>
-          </button>
-        `)
-        $('#active-lactose-button').click(() => {
-          lactose = 'All'
-          $('#active-lactose-button').remove()
-          appendMenuCards()
-        })
-      }
-
-      const curMinPrice = $('#min-price').val()
-      const curMaxPrice = $('#max-price').val()
-      if (curMinPrice != '' && curMaxPrice != '') {
-        minPrice = parseInt(curMinPrice)
-        maxPrice = parseInt(curMaxPrice)
-        $('#active-price').html(`
-          <button id="active-price-button" class="ml-4 bg-blue-400 py-2 px-4 rounded-full">
-            <div class="flex items-center">
-              Price: $${minPrice} - ${maxPrice}
-              <svg class="ml-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            <div>
-          </button>
-        `)
-        $('#active-price-button').click(() => {
-          minPrice = 0 
-          maxPrice = 99999999999999
-          $('#active-price-button').remove()
-          appendMenuCards()
-        })
-      }
-      else {
-        minPrice = 0 
-        maxPrice = 99999999999999
-        $('#active-price-button').remove()
-      }
-
-      appendMenuCards()
+      selected_category = $('#category').val()
+      $('#active-filters').html(`
+        <button id="active-category" class="bg-blue-400 py-2 px-4 rounded-full">
+          ${selected_category}
+        </button>
+      `)
+      $('#active-category').click(() => {
+        selected_category = null
+        appendStallCards()
+        $('#active-category').remove()
+      })
+      appendStallCards()
       $('#filter-modal').addClass('hidden')
-    })
-
-    $('.order-menu-modal-close-button').click(() => {
-      $('#order-menu-modal').addClass('hidden')
     })
 
     let oldOrderMenuQuantity = 0
@@ -755,8 +485,8 @@
             `)
             order_stall.menus.forEach((order_menu, idx) => {
               $(`#cart-menu-section-${order_stall.id}`).append(`
-                <div id="cart-menu-${order_menu.id}" class="mt-1 px-2 py-1 shadow-md rounded-md hover:bg-gray-100 flex justify-between">
-                  <div>
+                <div id="cart-menu-${order_menu.id}" class="mt-1 shadow-md rounded-md hover:bg-gray-100 flex justify-between items-center">
+                  <div class="px-2 py-1">
                     <a>
                       ${order_menu.quantity} ${order_menu.menu.name}
                     </a>
@@ -764,7 +494,8 @@
                       ${order_menu.notes}
                     </p>
                   </div>
-                  <p id="cart-menu-price-${order_menu.id}">
+                    
+                  <p id="cart-menu-price-${order_menu.id}" class="px-2">
                     $${order_menu.quantity * order_menu.menu.price}
                   </p>
                 </div>
@@ -789,7 +520,7 @@
           })
           $('#cart-stall-section').append(`
             <div class="pr-2 flex justify-between">
-              <h1 class="font-bold text-lg">Total</h1>
+              <h1 class="font-bold text-lg">全部的</h1>
               <h1 id="total-price" class="font-bold text-lg">
                 $${total}
               </h1>
@@ -806,6 +537,14 @@
       $('#cart-modal').addClass('hidden')
     })
 
+    $('.order-menu-modal-close-button').click(() => {
+      $('#order-menu-modal').addClass('hidden')
+    })
+    
+    $('.menu-recommendation-modal-close-button').click(() => {
+      $('#menu-recommendation-modal').addClass('hidden')
+    })
+
     $('.decrement-portion').click(() => {
       const curPortion = parseInt($('.portion-input').val())
       $('.portion-input').val(Math.max(0,curPortion-1))
@@ -818,29 +557,9 @@
 
     $('#new-order-menu-form').submit((e) => {
       e.preventDefault()
-      order_stall_id = localStorage.getItem(`order-stall-${stall_id}`)
+      order_stall_id = localStorage.getItem(`order-stall-${activeStall.id}`)
       order_menu_id = localStorage.getItem(`order-menu-${activeMenu.id}`)
-      if (order_menu_id == null) {
-        $.ajax({
-          url: `/api/order-menu/${order_stall_id}/${activeMenu.id}/`,
-          type: 'POST',
-          data: $('#new-order-menu-form').serialize(),
-          dataType: 'json',
-          success: (order_menu) => {
-            localStorage.setItem(`order-menu-${activeMenu.id}`, order_menu.id)
-            
-            let oldCntOrderMenu = parseInt(localStorage.getItem(`cnt-order-menu-${order_stall_id}`))
-            if (!oldCntOrderMenu) oldCntOrderMenu = 0
-            localStorage.setItem(`cnt-order-menu-${order_stall_id}`, oldCntOrderMenu+parseInt($('.portion-input').val()))
-
-          },
-          error: () => {
-            alert('Failed to add menu')
-          }
-        })
-      }
-      else {
-        $.ajax({
+      $.ajax({
         url: `/api/order-menu/${order_menu_id}/`,
         type: 'PUT',
         data: $('#new-order-menu-form').serialize(),
@@ -886,7 +605,6 @@
           alert('Failed to update menu')
         }
       })
-      }
       $('#order-menu-modal').addClass('hidden')
     })
 
@@ -898,14 +616,14 @@
         dataType: 'json',
         success: (order_menu) => {
           alert('Success')
-          window.location.href = '/start'
+          window.location.href = '/start/ch'
         },
         error: () => {
           alert('Failed to checkout order')
         }
       })
     })
-  })
+  }) 
 </script>
-
+  
 {% endblock content %}

@@ -5,8 +5,12 @@ app_name = 'foodies'
 
 urlpatterns = [
     path('start/', start, name='start'),
+    path('move-out/', move_out, name='move_out'),
+    path('start/ch/', start_chinese, name='start_chinese'),
     path('', home, name='home'),
+    path('ch/', home_chinese, name='home_chinese'),
     path('stall/<int:id>/', stall, name='stall'),
+    path('stall/ch/<int:id>/', stall_chinese, name='stall_chinese'),
     
     path('auth/new-stall/', new_stall, name='new_stall'),
     path('auth/new-menu/<int:id>/', new_menu, name='new_menu'),

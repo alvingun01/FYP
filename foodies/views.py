@@ -13,12 +13,25 @@ import os, sys
 def start(request):
     return render(request, 'start.html')
 
+def move_out(request):
+    return render(request, 'move-out.html')
+
+def start_chinese(request):
+    return render(request, 'start-ch.html')
+
 def home(request):
     return render(request, 'home.html')
+
+def home_chinese(request):
+    return render(request, 'home-ch.html')
 
 def stall(request, id):
     context = { 'stall_id': id }
     return render(request, 'stall.html', context)
+
+def stall_chinese(request, id):
+    context = { 'stall_id': id }
+    return render(request, 'stall-ch.html', context)
 
 def new_stall(request):
     return render(request, 'new_stall.html')
@@ -211,7 +224,8 @@ def order_menu_api(request, order_stall_id, menu_id):
                     new_order_menu = OrderMenu.objects.create(
                         order_stall = order_stall,
                         menu = menu,
-                        quantity = form.cleaned_data.get('quantity')
+                        quantity = form.cleaned_data.get('quantity'),
+                        notes = form.cleaned_data.get('notes'),
                     )
                     new_order_menu_serialized = OrderMenuSerializer(instance=new_order_menu)
                     return Response(new_order_menu_serialized.data, status=status.HTTP_201_CREATED)
@@ -243,7 +257,8 @@ def order_menu_v2_api(request, order_id, menu_id):
                     new_order_menu = OrderMenu.objects.create(
                         order_stall = order_stall,
                         menu = menu,
-                        quantity = form.cleaned_data.get('quantity')
+                        quantity = form.cleaned_data.get('quantity'),
+                        notes = form.cleaned_data.get('notes'),
                     )
                     new_order_menu_serialized = OrderMenuSerializer(instance=new_order_menu)
                     return Response(new_order_menu_serialized.data, status=status.HTTP_201_CREATED)
@@ -281,6 +296,7 @@ def order_menu_id_api(request, id):
         form = OrderMenuForm(request.POST)
         if (form.is_valid() and order_menu != None):
             order_menu.quantity = form.cleaned_data.get('quantity')
+            order_menu.notes = form.cleaned_data.get('notes')
             if (order_menu.quantity == 0):
                 OrderMenu.objects.get(id=id).delete()
             else:
@@ -338,8 +354,9 @@ def random_api(request):
         min_price = float(request.GET.get('minPrice'))
         max_price = float(request.GET.get('maxPrice'))
         category = request.GET.get('category')
-        hot = request.GET.get('hot') == 'true'
-        vegetarian, halal, peanut, shrimp, lactose = None, None, None, None, None
+        hot, vegetarian, halal, peanut, shrimp, lactose = None, None, None, None, None, None
+        if (request.GET.get('hot') != None):
+            hot = request.GET.get('hot') == 'true'
         if (request.GET.get('vegetarian') != None):
             vegetarian = request.GET.get('vegetarian') == 'true'
         if (request.GET.get('halal') != None):

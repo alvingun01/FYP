@@ -10,10 +10,10 @@
   <form id="new-order-form">
     {% csrf_token %}
     <div class="flex-col items-center justify-center">
-      <h1 class="text-xl text-center">Table Number</h1>
+      <h1 class="text-xl text-center">表号</h1>
       <input type="number" name="table_no" class="form-control w-full mt-4 h-20 rounded-xl text-2xl text-center">
       <button id="start-order" class="start-timeout w-full mt-6 bg-blue-500 py-4 text-white text-2xl rounded-xl hover:bg-blue-600">
-        START
+        开始
       </button>
     </div>
   </form>
@@ -23,9 +23,9 @@
 <script>
   $(document).ready(() => {
     $('#toggle-language').click(() => {
-      window.location.href = "/start/ch/"
+      window.location.href = "/start/"
     })
-    
+
     $('#new-order-form').submit((e) => {
       e.preventDefault();
       localStorage.clear();
@@ -37,7 +37,7 @@
         success: (order) => {
           localStorage.setItem('order', order.id)
           // localStorage.setItem('order-created-at', order.created_at)
-          location.href = '/'
+          location.href = '/ch'
         },
         error: () => {
           alert('Failed to create new order')

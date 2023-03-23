@@ -4,6 +4,9 @@
 {% block content %}
 
 <div class="relative h-screen w-full">
+  <div class="fixed bottom-10 left-10">
+    <img id="toggle-language" src="{% static 'language.svg' %}" class="h-16 w-16">
+  </div>
   <div class="fixed bottom-10 right-10 flex">
     <img id="filter-recommendation-modal-open-button" src="{% static 'chef.svg' %}" alt="recommendation" class="z-1000 w-20 h-20 hover:brightness-50 duration-300">
     <img id="cart-modal-open-button" src="{% static 'shopping-cart.png' %}" alt="cart" class="z-1000 ml-8 w-20 h-20 hover:brightness-50 duration-300">
@@ -301,6 +304,10 @@
           clearTimeout(timeout)
         }, 3*60*1000-(now-orderCreatedAt))
       }
+    })
+
+    $('#toggle-language').click(() => {
+      window.location.href = "/ch/"
     })
 
     let recommendationMenu = null
@@ -608,6 +615,7 @@
         dataType: 'json',
         success: (order_menu) => {
           alert('Success')
+          window.location.href = '/start'
         },
         error: () => {
           alert('Failed to checkout order')
