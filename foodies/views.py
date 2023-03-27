@@ -382,10 +382,10 @@ def random_api(request):
 
         menus = Menu.objects.all()
         menus_serialized = MenuSerializer(instance=menus, many=True) 
-        print(menus_serialized.data)
+        # print(menus_serialized.data)
         filtered_menus = list(filter(filter_menu, menus_serialized.data))
         
-        print(filtered_menus)
+        # print(filtered_menus)
 
         if (len(filtered_menus) > 0):
             chosen_menu = random.choice(filtered_menus)
